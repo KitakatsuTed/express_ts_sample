@@ -21,3 +21,5 @@ localhost:8080で開発進めるすすめる
 React参照
 - https://qiita.com/ohs30359-nobuhara/items/bdc06b2db1bef7af2439
 
+DBセットアップ sequlize postgreSQL
+- https://qiita.com/KoKeCross/items/144949ba03e5138fc6d5
