@@ -9,6 +9,10 @@ import logger from 'morgan'
 import * as indexRouter from './routes/index';
 import * as usersRouter from './routes/users';
 
+// .evnはあればよみこまれ、なければ自動的に無視される
+const ENV_PATH = path.join(__dirname, '.env');
+require('dotenv').config({ path: ENV_PATH });
+
 const app = express();
 
 // view engine setup

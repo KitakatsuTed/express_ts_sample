@@ -25,4 +25,4 @@ DBセットアップ sequlize postgreSQL
 - https://qiita.com/KoKeCross/items/144949ba03e5138fc6d5
 sequlize-cli specific conf
 - https://sequelize.org/master/manual/migrations.html#the--code--sequelizerc--code--file
-
+- https://qiita.com/pokotyan/items/776613d869eca99f6b7b
