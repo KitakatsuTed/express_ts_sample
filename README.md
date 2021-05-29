@@ -1,12 +1,44 @@
 ## 環境構築
 
-```sh
+```shell script
 npm install
 npm run dev
+npm run client
+```
+
+### 環境変数
+
+```shell script
+cp .env.sample .env
+```
+
+### DBセットアップ
+
+Dockerを利用する場合(＊しない場合はpostgresをインストール)
+```shell script
+docker-compose build
+docker-compose up
+```
+
+DB削除
+```shell script
+./src/bin/db/drop
+```
+DB作成
+```shell script
+./src/bin/db/create
+```
+マイグレーション
+```shell script
+./src/bin/db/migrate
+```
+DBリセット
+```shell script
+./src/bin/db/reset
 ```
 
 ## サーバー立ち上げ
-```sh
+```shell script
 npm run client # クライアント側サーバー(webpack)起動 :8080
 npm run dev # バックエンド側サーバー起動 :3000
 ```
@@ -26,3 +58,9 @@ DBセットアップ sequlize postgreSQL
 sequlize-cli specific conf
 - https://sequelize.org/master/manual/migrations.html#the--code--sequelizerc--code--file
 - https://qiita.com/pokotyan/items/776613d869eca99f6b7b
+
+
+
+型定義
+- https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a
+
