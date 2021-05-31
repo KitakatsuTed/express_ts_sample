@@ -24,3 +24,5 @@ module.exports = {
     "dialect": process.env.DB_DIALECT || "postgres"
   }
 };
+
+// use_env_variable: DATABASE_URLでもよい

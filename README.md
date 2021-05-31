@@ -37,13 +37,20 @@ DBリセット
 ./src/bin/db/reset
 ```
 
-## サーバー立ち上げ
+### サーバー立ち上げ
 ```shell script
 npm run client # クライアント側サーバー(webpack)起動 :8080
 npm run dev # バックエンド側サーバー起動 :3000
 ```
 
 localhost:8080で開発進めるすすめる
+
+## 開発
+### モデル作成
+models/ migrations/ 以下にそれぞれファイルが作られる
+```shell script
+npx sequelize-cli model:generate --name user --attributes firstName:string,lastName:string,email:string
+```
 
 ### 参考
 - https://snowsystem.net/javascript/typescript/express-typescript-rest-api/
@@ -58,8 +65,8 @@ DBセットアップ sequlize postgreSQL
 sequlize-cli specific conf
 - https://sequelize.org/master/manual/migrations.html#the--code--sequelizerc--code--file
 - https://qiita.com/pokotyan/items/776613d869eca99f6b7b
-
-
+- https://karuta-kayituka.hatenablog.com/entry/2019/07/21/132814
+- https://qiita.com/cobot00/items/0bc0da1095e09bcd0d5f
 
 型定義
 - https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a
