@@ -1,18 +1,11 @@
-import { Request, Response } from "express";
+import express from 'express'
+import UsersController from '../controllers/usersController'
 
-/* GET users listing. */
-export const index = (req: Request, res: Response) => {
-  res.send('respond with a resource');
-};
+const router = express.Router();
+const usersController = new UsersController()
 
+router.get("/", usersController.index)
+router.get("/new", usersController.newForm)
+router.post("/create", usersController.create)
 
-
-// var express = require('express');
-// var router = express.Router();
-//
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-//
-// module.exports = router;
+export default router
