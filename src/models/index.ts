@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
 import User from "./user";
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config')[env];
-
+const config = require('../config/database')[env];
+console.log(__dirname)
 // let sequelize: Sequelize;
 // if (config.use_env_variable) {
 //   sequelize = new Sequelize(process.env[config.use_env_variable], config);

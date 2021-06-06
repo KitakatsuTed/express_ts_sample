@@ -69,7 +69,7 @@
 //    "forceConsistentCasingInFileNames": true        /* Disallow inconsistently-cased references to the same file. */
 
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "./dist",
