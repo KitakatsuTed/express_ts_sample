@@ -17,15 +17,19 @@ export default class User extends Model {
       sequelize,
       modelName: 'user',
       tableName: 'users',
-      underscored: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
+      // underscored: true,
+      // createdAt: 'created_at',
+      // updatedAt: 'updated_at',
     })
 
     return this
   }
 
   static associate() {}
+
+  fullName() {
+    return `${this.lastName} ${this.firstName}`
+  }
 }
 
 // 元のファイル

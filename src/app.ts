@@ -6,7 +6,8 @@ import path from 'path'
 import fs from 'fs'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
-import debug from 'debug'
+import flash from 'express-flash'
+import session from 'express-session'
 
 import routRouter from './routes/root';
 import usersRouter from './routes/users';
@@ -30,8 +31,19 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(cookieParser());
+app.use(session({
+  secret: 'seqret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 180000
+  }
+}));
+// flash messageの利用宣言
+app.use(flash());
 
 // added middle ware
 

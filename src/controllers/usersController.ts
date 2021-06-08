@@ -4,19 +4,29 @@ import db from "../models";
 
 class UsersController {
 
-  index (req: Request, res: Response) {
+  async index (req: Request, res: Response) {
     res.render('users/index');
   }
 
-  newForm (req: Request, res: Response) {
+  async newForm (req: Request, res: Response) {
     const user: User = db.User.build()
-
     res.render('users/new', { user: user });
   }
 
-  create (req: Request, res: Response) {
-    // req.flash('info', `新規チーム[${team.name}]を作成しました`);
-    res.redirect('/users');
+  async create (req: Request, res: Response) {
+    const user = db.User.build({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    })
+
+    try {
+      await user.save()
+      req.flash('info', `新規ユーザー[${user.fullName()}]を作成しました`);
+      res.redirect('/users');
+    } catch(e) {
+      res.render('users/new.ejs', { user: user, e: e.message });
+    }
   }
 }
 
