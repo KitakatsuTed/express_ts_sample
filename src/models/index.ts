@@ -19,6 +19,8 @@ config.logging = (logStr: string, execTime: number, options: any) => {
         return colors.yellow(colors.bold(log))
       case 'INSERT':
         return colors.green(colors.bold(log))
+      case 'DELETE':
+        return colors.red(colors.bold(log))
       default:
         return colors.white(colors.bold(log))
     }
