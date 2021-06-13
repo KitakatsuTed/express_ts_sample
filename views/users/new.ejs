@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <body>
-    <div id="root">
-    <h1>ユーザー登録</h1>
-      <form method="POST" action="/users/create">
-        <div>
-          <label for="name">姓：</label>
-          <input type="text" id="user-lastName" name="lastName" value="<%= user.lastName %>" />
-        </div>
-        <div>
-          <label for="name">名：</label>
-          <input type="text" id="user-firstName" name="firstName" value="<%= user.firstName %>" />
-        </div>
-        <div>
-          <label for="name">姓：</label>
-          <input type="email" id="user-email" name="email" value="<%= user.email %>" />
-        </div>
-        <div>
-          <input type="submit" value="確認" />
-        </div>
-      </form>
-    </div>
-  </body>
-</html>
+<h1>ユーザー登録</h1>
+
+<%- include('./_form.ejs', { url: `/users`, method: "post", user, validationError }) %>
+
+<a href="/users">一覧に戻る</a>

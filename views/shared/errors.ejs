@@ -1,0 +1,7 @@
+<% if (error) { %>
+    <ul>
+        <% error.errors.forEach(function (value, _key) { %>
+            <li><%= value.message %></li>
+        <% }); %>
+    </ul>
+<% } %>

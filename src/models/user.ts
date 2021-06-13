@@ -9,48 +9,56 @@ export default class User extends Model {
   public readonly created_at!: Date
   public readonly updated_at!: Date
 
+  // https://sequelize.org/master/manual/validations-and-constraints.html
   static initialize(sequelize: Sequelize) {
-    this.init({
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING
-    }, {
-      sequelize,
-      modelName: 'user',
-      tableName: 'users',
-      // underscored: true,
-      // createdAt: 'created_at',
-      // updatedAt: 'updated_at',
-    })
+    this.init(
+      {
+        firstName: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: '姓が入力されていません'
+            }
+          }
+        },
+        lastName: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: '姓が入力されていません'
+            }
+          }
+        },
+        email: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+          validate: {
+            isEmail: {
+              msg: 'Eメールのフォーマットはxxx@xxxです'
+            }
+          }
+        }
+      },
+      {
+        sequelize,
+        modelName: 'user',
+        tableName: 'users',
+        // 下記は別に設定しなくてもよさげ
+        // underscored: true,
+        // createdAt: 'created_at',
+        // updatedAt: 'updated_at',
+      }
+    )
 
     return this
   }
 
   static associate() {}
 
-  fullName() {
+  fullName(): string {
     return `${this.lastName} ${this.firstName}`
   }
 }
-
-// 元のファイル
-// module.exports = (sequelize, DataTypes) => {
-//   class user extends Model {
-//     /**
-//      * Helper method for defining associations.
-//      * This method is not a part of Sequelize lifecycle.
-//      * The `models/index` file will call this method automatically.
-//      */
-//     static associate(models) {
-//       // define association here
-//     }
-//   };
-//   user.init({
-//     firstName: DataTypes.STRING,
-//     lastName: DataTypes.STRING,
-//     email: DataTypes.STRING
-//   }, {
-//     sequelize,
-//     modelName: 'user',
-//   });
-//   return user;
-// };
