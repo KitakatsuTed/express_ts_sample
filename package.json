@@ -4,7 +4,7 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn ./src/bin/www",
+    "dev": "DEBUG=express_ts_sample:*,express-mvc:*,route:*,develop ts-node-dev --respawn ./src/bin/www",
     "clean": "rimraf dist",
     "tsc": "tsc",
     "build": "npm-run-all clean tsc",

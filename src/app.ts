@@ -13,9 +13,12 @@ import flash from 'express-flash'
 import session from 'express-session'
 import expressLayouts from 'express-ejs-layouts'
 import methodOverride from 'method-override'
+import debug, {Debugger} from 'debug'
 
 import routRouter from './routes/root';
 import usersRouter from './routes/users';
+
+const logDebugger: Debugger = debug(('develop'))
 
 // .envはあればよみこまれ、なければ自動的に無視される
 const ENV_PATH = path.join(__dirname, '../.env');
@@ -72,15 +75,14 @@ app.use(function(req,res,next){
 })
 // added middle ware
 
-// TODO console.log をdebugに置き換える(第２引数が使えないのなんで？)
 const logging = (req: Request, res: Response, next: NextFunction) => {
   const date = new Date()
-  console.log("=================================================================")
-  console.log(`Request: %o`, `${req.method} ${req.originalUrl}`)
-  console.log(`Access Time: %o`, date.toString())
-  console.log(`params: %o`, req.params)
-  console.log(`body: %o`, req.body)
-  console.log(`query: %o`, req.query)
+  logDebugger("=================================================================")
+  logDebugger(`Request: %o`, `${req.method} ${req.originalUrl}`)
+  logDebugger(`Access Time: %o`, date.toString())
+  logDebugger(`params: %o`, req.params)
+  logDebugger(`body: %o`, req.body)
+  logDebugger(`query: %o`, req.query)
   next()
 }
 
@@ -105,7 +107,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  console.log(err.stack)
+  debug(err.stack)
   // render the error page
   res.status(err.status || 500);
   res.render('errors');
