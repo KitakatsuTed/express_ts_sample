@@ -8,7 +8,8 @@ module.exports = {
     'database': process.env.DB_DATABASE || "express_development",
     'host': process.env.DB_HOST || "127.0.0.1",
     'port': process.env.DB_PORT || 5432,
-    "dialect": process.env.DB_DIALECT || "postgres"
+    "dialect": process.env.DB_DIALECT || "postgres",
+    "benchmark": true
   },
   "test": {
     'username': process.env.DB_USERNAME || 'postgres',
@@ -16,7 +17,8 @@ module.exports = {
     'database': process.env.DB_DATABASE || "express_test",
     'host': process.env.DB_HOST || "127.0.0.1",
     'port': process.env.DB_PORT || 5432,
-    "dialect": process.env.DB_DIALECT || "postgres"
+    "dialect": process.env.DB_DIALECT || "postgres",
+    "benchmark": true,
   },
   "production": {
     'username': process.env.DB_USERNAME || 'postgres',
@@ -24,7 +26,8 @@ module.exports = {
     'database': process.env.DB_DATABASE || "express_production",
     'host': process.env.DB_HOST || "127.0.0.1",
     'port': process.env.DB_PORT || 5432,
-    "dialect": process.env.DB_DIALECT || "postgres"
+    "dialect": process.env.DB_DIALECT || "postgres",
+    "benchmark": true
   }
 };
 

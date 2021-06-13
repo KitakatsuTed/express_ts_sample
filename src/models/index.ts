@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import colors from 'colors/safe'
 import User from "./user";
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database')[env];
@@ -8,6 +9,24 @@ const config = require('../config/database')[env];
 // } else {
 //   sequelize = new Sequelize(config.database, config.username, config.password, config);
 // }
+
+config.logging = (logStr: string, execTime: number, options: any) => {
+  const col = (optionType: string, log: string) => {
+    switch (optionType) {
+      case 'SELECT':
+        return colors.blue(colors.bold(log))
+      case 'UPDATE':
+        return colors.yellow(colors.bold(log))
+      case 'INSERT':
+        return colors.green(colors.bold(log))
+      default:
+        return colors.white(colors.bold(log))
+    }
+  }
+  console.log(colors.magenta(colors.bold(`[${execTime} ms]`)), col(options.type, logStr))
+}
+
+
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 
