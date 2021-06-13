@@ -9,7 +9,8 @@ module.exports = {
     'host': process.env.DB_HOST || "127.0.0.1",
     'port': process.env.DB_PORT || 5432,
     "dialect": process.env.DB_DIALECT || "postgres",
-    "benchmark": true
+    "benchmark": true,
+    "logQueryParameters" : true
   },
   "test": {
     'username': process.env.DB_USERNAME || 'postgres',
@@ -19,6 +20,7 @@ module.exports = {
     'port': process.env.DB_PORT || 5432,
     "dialect": process.env.DB_DIALECT || "postgres",
     "benchmark": true,
+    "logQueryParameters" : true
   },
   "production": {
     'username': process.env.DB_USERNAME || 'postgres',
@@ -27,7 +29,8 @@ module.exports = {
     'host': process.env.DB_HOST || "127.0.0.1",
     'port': process.env.DB_PORT || 5432,
     "dialect": process.env.DB_DIALECT || "postgres",
-    "benchmark": true
+    "benchmark": true,
+    "logQueryParameters" : true
   }
 };
 
