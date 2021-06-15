@@ -5,6 +5,7 @@ export default class User extends Model {
   public firstName!: string
   public lastName!: string
   public email!: string
+  public password!: string
 
   public readonly created_at!: Date
   public readonly updated_at!: Date
@@ -39,6 +40,19 @@ export default class User extends Model {
             isEmail: {
               msg: 'Eメールのフォーマットはxxx@xxxです'
             }
+          }
+        },
+        password: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            min: {
+              args: [6],
+              msg: "パスワードは6文字以上です"
+            },
+            isEmail: {
+              msg: 'パスワードが入力されていません'
+            },
           }
         }
       },
