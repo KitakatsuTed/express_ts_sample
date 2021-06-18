@@ -9,6 +9,7 @@ import path from 'path'
 import fs from 'fs'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
+import passport from "passport"
 import flash from 'express-flash'
 import session from 'express-session'
 import expressLayouts from 'express-ejs-layouts'
@@ -17,6 +18,7 @@ import debug, {Debugger} from 'debug'
 
 import routRouter from './routes/root';
 import usersRouter from './routes/users';
+import authRouter from './routes/auth';
 
 const logDebugger: Debugger = debug(('develop'))
 
@@ -52,6 +54,15 @@ app.use(session({
   }
 }));
 
+app.use(passport.initialize());
+// sessionでアクセス認証を行う https://applingo.tokyo/article/1700
+app.use(passport.session());
+
+app.use(function currentUser(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 // @see http://expressjs.com/en/resources/middleware/method-override.html https://chaika.hatenablog.com/entry/2015/10/06/183604
 app.use(methodOverride(function (req, _res) {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -69,11 +80,10 @@ app.use(flash());
 app.use(function(req,res,next){
   res.locals.flashMessage = {
     alert: req.flash("alert"),
-    notice: req.flash("notice")
+    success: req.flash("success")
   }
   next()
 })
-// added middle ware
 
 const logging = (req: Request, res: Response, next: NextFunction) => {
   const date = new Date()
@@ -88,11 +98,9 @@ const logging = (req: Request, res: Response, next: NextFunction) => {
 
 app.use(logging)
 
-////////////////////////////////////////
-
 // userだと第一引数以下の階層を見る
 app.use('/users', usersRouter);
-// getは単一のパス
+app.use('/', authRouter);
 app.use('/', routRouter);
 
 // catch 404 and forward to error handler
@@ -107,7 +115,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  debug(err.stack)
+  console.log(err.stack)
   // render the error page
   res.status(err.status || 500);
   res.render('errors');

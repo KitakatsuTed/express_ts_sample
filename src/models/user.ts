@@ -1,4 +1,6 @@
-import { Model, DataTypes, Sequelize } from "sequelize"
+import {Model, DataTypes, Sequelize, CreateOptions} from "sequelize"
+import bcrypt from 'bcrypt-nodejs'
+import {HookReturn} from "sequelize/types/lib/hooks";
 
 export default class User extends Model {
   public id!: number
@@ -19,7 +21,7 @@ export default class User extends Model {
           allowNull: false,
           validate: {
             notEmpty: {
-              msg: '姓が入力されていません'
+              msg: '名が入力されていません'
             }
           }
         },
@@ -46,13 +48,14 @@ export default class User extends Model {
           type: DataTypes.STRING,
           allowNull: false,
           validate: {
-            min: {
-              args: [6],
-              msg: "パスワードは6文字以上です"
-            },
-            isEmail: {
+            notEmpty: {
               msg: 'パスワードが入力されていません'
             },
+            // min が想定通り動かないのでlenを利用
+            len: {
+              args: [6, 100],
+              msg: "パスワードは6文字以上です"
+            }
           }
         }
       },
@@ -64,6 +67,9 @@ export default class User extends Model {
         // underscored: true,
         // createdAt: 'created_at',
         // updatedAt: 'updated_at',
+        hooks: {
+          beforeCreate: beforeCreate
+        }
       }
     )
 
@@ -75,4 +81,41 @@ export default class User extends Model {
   fullName(): string {
     return `${this.lastName} ${this.firstName}`
   }
+
+  validPassword(password: string): boolean {
+    return bcrypt.compareSync(password, this.password)
+  }
 }
+
+function cryptPassword(password: string) {
+  console.log("cryptPassword" + password);
+
+  return new Promise(function (resolve: (hash: string) => void, reject: (err: Error) => void) {
+    bcrypt.genSalt(10, function (err: Error, salt: string) {
+      // Encrypt password using bycrpt module
+      if (err) return reject(err);
+
+      bcrypt.hash(password, salt, null, function (err: Error, hash: string) {
+        if (err) return reject(err);
+        return resolve(hash);
+      });
+    });
+  });
+}
+
+function beforeCreate(user: User, option: CreateOptions) {
+  console.log("User.beforeCreate");
+
+  return cryptPassword(user.password)
+    .then(success => {
+      user.password = success;
+    })
+    .catch(err => {
+      if (err) console.log(err);
+    });
+}
+
+// callbackの追加はこっちでも行ける
+// User.addHook('beforeValidate', (user, options) => {
+//   user.mood = 'happy';
+// });

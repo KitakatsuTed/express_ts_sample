@@ -26,12 +26,13 @@ class UsersController {
     const user = db.User.build({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      email: req.body.email
+      email: req.body.email,
+      password: req.body.password
     })
 
     try {
       await user.save()
-      req.flash('notice', `新規ユーザー[${user.fullName()}]を作成しました`);
+      req.flash('success', `新規ユーザー[${user.fullName()}]を作成しました`);
       res.redirect('/users');
     } catch(e) {
       if (e instanceof ValidationError) {
@@ -55,9 +56,10 @@ class UsersController {
       await user.update({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.email
+        email: req.body.email,
+        password: req.body.password
       })
-      req.flash('notice', 'ユーザー情報を更新しました');
+      req.flash('success', 'ユーザー情報を更新しました');
       res.redirect(`/users/${user.id}`);
     } catch(e) {
       if (e instanceof ValidationError) {
@@ -72,7 +74,7 @@ class UsersController {
     const user: User = await db.User.findByPk(req.params.id)
 
     user.destroy()
-    req.flash('notice', `新規ユーザー[${user.fullName()}]を削除しました`);
+    req.flash('success', `新規ユーザー[${user.fullName()}]を削除しました`);
     res.redirect("/users");
   }
 }

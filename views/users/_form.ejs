@@ -4,16 +4,20 @@
   <%- include('../shared/errors.ejs', { error: validationError }) %>
 
   <div>
-    <label for="name">姓：</label>
+    <label for="user-lastName">姓：</label>
     <input type="text" id="user-lastName" name="lastName" value="<%= user.lastName %>" />
   </div>
   <div>
-    <label for="name">名：</label>
+    <label for="user-firstName">名：</label>
     <input type="text" id="user-firstName" name="firstName" value="<%= user.firstName %>" />
   </div>
   <div>
-    <label for="name">Eメール：</label>
+    <label for="user-email">Eメール：</label>
     <input type="email" id="user-email" name="email" value="<%= user.email %>" />
+  </div>
+  <div>
+    <label for="user-password">パスワード</label>
+    <input type="password" id="user-password" name="password" value="<%=user.password%>" />
   </div>
   <div>
     <input type="submit" value="確認" />
