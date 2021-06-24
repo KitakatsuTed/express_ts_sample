@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express, {NextFunction, Request, Response} from "express";
 import passport from "passport"
 import passportLocal from "passport-local"
 import db from "../models";

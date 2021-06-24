@@ -1,5 +1,7 @@
 <h1>ログイン</h1>
 
+<%- include('../shared/flash.ejs', { message: flashMessage } ) %>
+
 <form method="post" action="/login">
   <div>
     <label for="user-email">Eメール：</label>

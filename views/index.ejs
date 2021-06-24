@@ -1,8 +1,10 @@
 <h1>ホーム</h1>
 
-<% if (currentUser) { %>
-  <%= currentUser.lastName %>
-<% } %>
+<div>
+  <% if (currentUser) { %>
+    ログインユーザー: <%= currentUser.lastName %>
+  <% } %>
+</div>
 
 <% if (currentUser) { %>
   <a href="/logout">ログアウト</a>
