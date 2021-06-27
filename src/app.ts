@@ -20,6 +20,7 @@ import csrf from 'csurf'
 import routRouter from './routes/root';
 import usersRouter from './routes/users';
 import authRouter from './routes/auth';
+import registratesRouter from './routes/registrates';
 
 const logDebugger: Debugger = debug(('develop'))
 
@@ -111,6 +112,7 @@ const logging = (req: Request, res: Response, next: NextFunction) => {
 app.use(logging)
 
 app.use('/users', usersRouter);
+app.use('/', registratesRouter);
 app.use('/', authRouter);
 app.use('/', routRouter);
 

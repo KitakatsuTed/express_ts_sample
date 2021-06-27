@@ -1,6 +1,5 @@
 import {Model, DataTypes, Sequelize, CreateOptions} from "sequelize"
 import bcrypt from 'bcrypt-nodejs'
-import {HookReturn} from "sequelize/types/lib/hooks";
 
 export default class User extends Model {
   public id!: number
@@ -37,7 +36,7 @@ export default class User extends Model {
         email: {
           type: DataTypes.STRING,
           allowNull: false,
-          unique: true,
+          unique: { name: 'email', msg: 'Eメールは存在します' },
           validate: {
             isEmail: {
               msg: 'Eメールのフォーマットはxxx@xxxです'

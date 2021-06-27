@@ -3,28 +3,20 @@
 <table border="1">
   <thead>
     <tr>
-      <th>姓</th>
-      <th>名</th>
+      <th>姓名</th>
       <th>Eメール</th>
       <th>createdAt</th>
       <th>updatedAt</th>
-      <th colspan="3">操作</th>
     </tr>
   </thead>
   <tbody>
     <% users.forEach(function (user, _key) { %>
       <tr>
-        <td><%= user.lastName %></td>
-        <td><%= user.firstName %></td>
+        <td><a href="/users/<%= user.id %>"><%= user.fullName()%></a></td>
         <td><%= user.email %></td>
         <td><%= user.createdAt.toLocaleString("ja") %></td>
         <td><%= user.updatedAt.toLocaleString("ja") %></td>
-        <td><a href="/users/<%= user.id %>">詳細</a></td>
-        <td><a href="/users/<%= user.id %>/edit">編集</a></td>
-        <td><a href="/users/<%= user.id %>?_method=delete">削除</a></td>
     </tr>
     <% }) %>
   </tbody>
 </table>
-
-<a href="/users/new">新規作成</a>

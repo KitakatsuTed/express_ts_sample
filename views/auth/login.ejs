@@ -5,6 +5,7 @@
     <%= loginMessage %>
   </div>
 <% } %>
+<%- include('../shared/flash.ejs', { message: flashMessage } ) %>
 
 <form method="post" action="/login">
   <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -25,4 +26,5 @@
   </div>
 </form>
 
+<a href="/sign_up">サインアップ</a>
 <a href="/">ホームへ</a>

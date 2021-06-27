@@ -7,6 +7,15 @@ import User from "../models/user";
 const router = express.Router();
 const LocalStrategy = passportLocal.Strategy
 
+const loginCheck = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated()) {
+    req.flash('alert', 'すでにログイン済みです')
+    res.redirect("/");
+  } else {
+    next()
+  }
+}
+
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
@@ -41,16 +50,17 @@ passport.deserializeUser(async (userTid: User, done) => {
   done(null, user);
 });
 
-router.get('/login', (req: Request, res: Response) => {
+router.get('/login', [loginCheck, (req: Request, res: Response) => {
   res.render('auth/login.ejs', { layout: false, loginMessage: req.flash("error") });
-})
+}])
 
-router.post('/login', passport.authenticate('local', {
+router.post('/login', loginCheck)
+router.post('/login', [loginCheck, passport.authenticate('local', {
     successRedirect: '/',
     successFlash: 'ログインしました',
     failureRedirect: '/login',
     failureFlash: 'ログインに失敗しました' // LocalStrategyの第2引数でメッセージを細かくコントロールできるようにすること
-  })
+  })]
 )
 
 router.get('/logout', (req: Request, res: Response) => {
