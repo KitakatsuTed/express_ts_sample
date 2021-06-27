@@ -19,7 +19,7 @@ class UsersController {
 
   async newForm (req: Request, res: Response) {
     const user: User = db.User.build()
-    res.render('users/new', { user, validationError: null });
+    res.render('users/new', { user, validationError: null, csrfToken: req.csrfToken() });
   }
 
   async create (req: Request, res: Response) {
@@ -32,11 +32,11 @@ class UsersController {
 
     try {
       await user.save()
-      req.flash('success', `新規ユーザー[${user.fullName()}]を作成しました`);
+      req.flash('success', `新規ユーザー: ${user.fullName()} を作成しました`);
       res.redirect('/users');
     } catch(e) {
       if (e instanceof ValidationError) {
-        res.render('users/new.ejs', { user: user, validationError: e });
+        res.render('users/new.ejs', { user: user, validationError: e, csrfToken: req.csrfToken() });
       } else {
         throw e
       }
@@ -46,7 +46,7 @@ class UsersController {
   async edit (req: Request, res: Response) {
     const user: User = await db.User.findByPk(req.params.id)
 
-    res.render('users/edit', { user, validationError: null })
+    res.render('users/edit', { user, validationError: null, csrfToken: req.csrfToken() })
   }
 
   async update(req: Request, res: Response) {
@@ -63,7 +63,7 @@ class UsersController {
       res.redirect(`/users/${user.id}`);
     } catch(e) {
       if (e instanceof ValidationError) {
-        res.render('users/edit.ejs', { user: user, validationError: e });
+        res.render('users/edit.ejs', { user: user, validationError: e, csrfToken: req.csrfToken() });
       } else {
         throw e
       }

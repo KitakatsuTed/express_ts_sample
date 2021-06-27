@@ -1,8 +1,15 @@
 <h1>ログイン</h1>
 
-<%- include('../shared/flash.ejs', { message: flashMessage } ) %>
+<% if (loginMessage.length > 0) { %>
+  <div>
+    <%= loginMessage %>
+  </div>
+<% } %>
 
 <form method="post" action="/login">
+  <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <input type="hidden" name="_method" value="POST" />
+
   <div>
     <label for="user-email">Eメール：</label>
     <input type="text" id="user-email" name="email" />

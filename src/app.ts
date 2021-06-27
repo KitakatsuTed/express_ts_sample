@@ -15,6 +15,7 @@ import session from 'express-session'
 import expressLayouts from 'express-ejs-layouts'
 import methodOverride from 'method-override'
 import debug, {Debugger} from 'debug'
+import csrf from 'csurf'
 
 import routRouter from './routes/root';
 import usersRouter from './routes/users';
@@ -54,6 +55,9 @@ app.use(session({
   }
 }));
 
+// sessionを利用する仕組みなのでsession周りの設定の後に記述すること
+app.use(csrf({ cookie: true }))
+
 app.use(passport.initialize());
 // sessionでアクセス認証を行う https://applingo.tokyo/article/1700
 app.use(passport.session());
@@ -75,9 +79,17 @@ app.use(methodOverride(function (req, _res) {
 
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] })); // for GET Parameter
 
-// flash messageの利用宣言
+if (process.env.NODE_ENV !== 'test') {
+  app.use((req, res, next) => {
+    const csrfToken = req.csrfToken();
+    res.locals.csrfToken = csrfToken;
+    next();
+  });
+}
+
 app.use(flash());
 app.use(function(req,res,next){
+  // flash messageの利用宣言
   res.locals.flashMessage = {
     alert: req.flash("alert"),
     success: req.flash("success")
@@ -98,7 +110,6 @@ const logging = (req: Request, res: Response, next: NextFunction) => {
 
 app.use(logging)
 
-// userだと第一引数以下の階層を見る
 app.use('/users', usersRouter);
 app.use('/', authRouter);
 app.use('/', routRouter);

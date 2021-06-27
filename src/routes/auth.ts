@@ -16,10 +16,10 @@ passport.use(new LocalStrategy({
       const user: User | null = await db.User.findOne({where: {email: username}})
 
       if (!user) {
-        return done(null, false, {message: 'ユーザーIDが間違っています。'});
+        return done(null, false);
       }
       if (!user.validPassword(password)) {
-        return done(null, false, {message: 'パスワードが間違っています。'});
+        return done(null, false);
       }
       return done(null, user);
     } catch (e) {
@@ -42,14 +42,14 @@ passport.deserializeUser(async (userTid: User, done) => {
 });
 
 router.get('/login', (req: Request, res: Response) => {
-  res.render('auth/login.ejs', { layout: false });
+  res.render('auth/login.ejs', { layout: false, loginMessage: req.flash("error") });
 })
 
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     successFlash: 'ログインしました',
     failureRedirect: '/login',
-    failureFlash: true
+    failureFlash: 'ログインに失敗しました' // LocalStrategyの第2引数でメッセージを細かくコントロールできるようにすること
   })
 )
 

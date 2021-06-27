@@ -1,4 +1,5 @@
 <form method="post" action=<%= url %>>
+  <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
   <input type="hidden" name="_method" value=<%= method %> />
 
   <%- include('../shared/errors.ejs', { error: validationError }) %>
