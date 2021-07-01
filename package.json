@@ -17,6 +17,7 @@
     "@types/express-flash": "^0.0.2",
     "@types/passport": "^1.0.6",
     "bcrypt-nodejs": "^0.0.3",
+    "bootstrap": "^5.0.2",
     "colors": "^1.4.0",
     "cookie-parser": "~1.4.4",
     "csurf": "^1.11.0",
