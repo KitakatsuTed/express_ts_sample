@@ -62,5 +62,7 @@ typings/
 .next
 
 .idea
+dist
 
-./dist
+# for docker
+docker/data

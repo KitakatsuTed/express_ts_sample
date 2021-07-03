@@ -1,0 +1,22 @@
+<h2>ユーザー一覧</h2>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>Eメール</th>
+      <th>createdAt</th>
+      <th>updatedAt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(function (user, _key) { %>
+      <tr>
+        <td><a href="/users/<%= user.id %>"><%= user.fullName()%></a></td>
+        <td><%= user.email %></td>
+        <td><%= user.createdAt.toLocaleString("ja") %></td>
+        <td><%= user.updatedAt.toLocaleString("ja") %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

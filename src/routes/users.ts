@@ -1,18 +1,21 @@
-import { Request, Response } from "express";
+import express from 'express'
+import UsersController from '../controllers/usersController'
 
-/* GET users listing. */
-export const index = (req: Request, res: Response) => {
-  res.send('respond with a resource');
-};
+const router = express.Router();
+const usersController = new UsersController()
 
+// ログイン要求のモジュールの良い共通化方法を考える
+router.all("/*", function(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    console.log('no login...')
+    req.flash('danger', 'ログインしてください')
+    res.redirect("/login");
+  }
+});
 
+router.get("/", usersController.index)
+router.get("/:id", usersController.show)
 
-// var express = require('express');
-// var router = express.Router();
-//
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-//
-// module.exports = router;
+export default router

@@ -1,0 +1,4 @@
+#!/bin/bash
+npx sequelize-cli db:drop --debug
+npx sequelize-cli db:create --debug
+npx sequelize-cli db:migrate --debug

@@ -1,0 +1,30 @@
+<h1>ログイン</h1>
+
+<% if (loginMessage.length > 0) { %>
+  <div class="alert alert-danger">
+    <%= loginMessage %>
+  </div>
+<% } %>
+<%- include('../shared/flash.ejs', { message: flashMessage } ) %>
+
+<form method="post" action="/login">
+  <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <input type="hidden" name="_method" value="POST" />
+
+  <div class="form-group">
+    <label for="user-email">Eメール：</label>
+    <input type="text" id="user-email" class="form-control" name="email" />
+  </div>
+
+  <div class="form-group">
+    <label for="user-password">パスワード：</label>
+    <input type="password" id="user-password" class="form-control" name="password" />
+  </div>
+
+  <div class="form-group">
+    <input type="submit" value="ログイン" class="btn btn-primary" />
+  </div>
+</form>
+
+<a href="/sign_up">サインアップ</a>
+<a href="/">ホームへ</a>
