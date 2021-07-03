@@ -10,7 +10,7 @@ class UsersController {
   }
 
   async show (req: Request, res: Response) {
-    const user: User = await db.User.findByPk(req.params.id)
+    const user: User = req.user as User
 
     res.render('users/show', { user })
   }

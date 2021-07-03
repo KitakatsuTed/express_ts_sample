@@ -10,7 +10,7 @@ router.all("/*", function(req, res, next) {
     next();
   } else {
     console.log('no login...')
-    req.flash('alert', 'ログインしてください')
+    req.flash('danger', 'ログインしてください')
     res.redirect("/login");
   }
 });

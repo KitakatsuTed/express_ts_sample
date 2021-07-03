@@ -4,12 +4,12 @@ const router = express.Router();
 const registratesController = new RegistratesController()
 
 // ログイン要求のモジュールの良い共通化方法を考える
-router.all("/account", (req: Request, res: Response, next: NextFunction) => {
+router.all("/account*", (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
     next();
   } else {
     console.log('no login...')
-    req.flash('alert', 'ログインしてください')
+    req.flash('danger', 'ログインしてください')
     res.redirect("/login");
   }
 });

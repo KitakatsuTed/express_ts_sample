@@ -11,18 +11,18 @@
   <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
   <input type="hidden" name="_method" value="POST" />
 
-  <div class="bg-success">
+  <div class="form-group">
     <label for="user-email">Eメール：</label>
-    <input type="text" id="user-email" name="email" />
-  </div>
-  
-  <div>
-    <label for="user-password">パスワード：</label>
-    <input type="password" id="user-password" name="password" />
+    <input type="text" id="user-email" class="form-control" name="email" />
   </div>
 
-  <div>
-    <input type="submit" value="ログイン" />
+  <div class="form-group">
+    <label for="user-password">パスワード：</label>
+    <input type="password" id="user-password" class="form-control" name="password" />
+  </div>
+
+  <div class="form-group">
+    <input type="submit" value="ログイン" class="btn btn-primary" />
   </div>
 </form>
 

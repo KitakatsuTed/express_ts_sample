@@ -1,11 +1,11 @@
 <% if (message.success.length > 0) { %>
-  <div>
+  <div class="alert alert-success">
     <%= message.success %>
   </div>
 <% } %>
 
-<% if (message.alert.length > 0) { %>
-  <div>
-    <%= message.alert %>
+<% if (message.danger.length > 0) { %>
+  <div class="alert alert-danger">
+    <%= message.danger %>
   </div>
 <% } %>

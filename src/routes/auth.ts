@@ -9,7 +9,7 @@ const LocalStrategy = passportLocal.Strategy
 
 const loginCheck = (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
-    req.flash('alert', 'すでにログイン済みです')
+    req.flash('danger', 'すでにログイン済みです')
     res.redirect("/");
   } else {
     next()
@@ -51,7 +51,7 @@ passport.deserializeUser(async (userTid: User, done) => {
 });
 
 router.get('/login', [loginCheck, (req: Request, res: Response) => {
-  res.render('auth/login.ejs', { layout: false, loginMessage: req.flash("error") });
+  res.render('auth/login.ejs', { layout: 'layouts/simpleLayout.ejs', loginMessage: req.flash("error") });
 }])
 
 router.post('/login', loginCheck)

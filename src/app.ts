@@ -39,13 +39,14 @@ const app = express();
 // view engine setup
 app.set('./views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, "../node_modules/bootstrap/dist/css"))); // <- This will use the contents of 'bootstrap/dist/css' which is placed in your node_modules folder as if it is in your '/styles/css' directory.
+app.use('/bootstrap', express.static(path.join(__dirname, "../node_modules/bootstrap/dist/css"))); // <- This will use the contents of 'bootstrap/dist/css' which is placed in your node_modules folder as if it is in your '/styles/css' directory.
 app.use(cookieParser());
 app.use(session({
   secret: 'seqret',
@@ -92,7 +93,7 @@ app.use(flash());
 app.use(function(req,res,next){
   // flash messageの利用宣言
   res.locals.flashMessage = {
-    alert: req.flash("alert"),
+    danger: req.flash("danger"),
     success: req.flash("success")
   }
   next()

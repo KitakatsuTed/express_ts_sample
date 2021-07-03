@@ -6,7 +6,7 @@ import {ValidationError} from "sequelize";
 export default class RegistratesController {
   async newForm (req: Request, res: Response) {
     const user: User = db.User.build()
-    res.render('registrates/new', { user, validationError: null, csrfToken: req.csrfToken(), layout: false });
+    res.render('registrates/new', { user, validationError: null, csrfToken: req.csrfToken(), layout: 'layouts/simpleLayout.ejs' });
   }
 
   async create (req: Request, res: Response) {

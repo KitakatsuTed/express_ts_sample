@@ -4,23 +4,23 @@
 
   <%- include('../shared/errors.ejs', { error: validationError }) %>
 
-  <div>
+  <div class="form-group">
     <label for="user-lastName">姓：</label>
-    <input type="text" id="user-lastName" name="lastName" value="<%= user.lastName %>" />
+    <input type="text" id="user-lastName" name="lastName" class="form-control" value="<%= user.lastName %>" />
   </div>
-  <div>
+  <div class="form-group">
     <label for="user-firstName">名：</label>
-    <input type="text" id="user-firstName" name="firstName" value="<%= user.firstName %>" />
+    <input type="text" id="user-firstName" name="firstName" class="form-control" value="<%= user.firstName %>" />
   </div>
-  <div>
+  <div class="form-group">
     <label for="user-email">Eメール：</label>
-    <input type="email" id="user-email" name="email" value="<%= user.email %>" />
+    <input type="email" id="user-email" name="email" class="form-control" value="<%= user.email %>" />
   </div>
-  <div>
+  <div class="form-group">
     <label for="user-password">パスワード</label>
-    <input type="password" id="user-password" name="password" value="<%=user.password%>" />
+    <input type="password" id="user-password" name="password" class="form-control" value="<%=user.password%>" />
   </div>
-  <div>
-    <input type="submit" value="確認" />
+  <div class="form-group">
+    <input type="submit" class="btn btn-primary" value="確認" />
   </div>
 </form>
