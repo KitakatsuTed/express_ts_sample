@@ -60,8 +60,7 @@ export default class User extends Model {
       },
       {
         sequelize,
-        modelName: 'user',
-        tableName: 'users',
+        modelName: 'User',
         // 下記は別に設定しなくてもよさげ
         // underscored: true,
         // createdAt: 'created_at',
@@ -75,7 +74,19 @@ export default class User extends Model {
     return this
   }
 
-  static associate() {}
+  static associate(db: any) {
+    this.hasMany(db.OrganizationUser, {
+      foreignKey: 'userId',
+      as: 'organizationUsers'
+    })
+
+    this.belongsToMany(db.Organization, {
+      through: 'OrganizationUser',
+      foreignKey: 'userId',
+      otherKey: 'organizationId',
+      as: 'organizations'
+    })
+  }
 
   fullName(): string {
     return `${this.lastName} ${this.firstName}`

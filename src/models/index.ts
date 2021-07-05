@@ -1,6 +1,8 @@
 import { Sequelize } from "sequelize";
 import colors from 'colors/safe'
 import User from "./user";
+import Organization from "./organization";
+import OrganizationUser from "./organization_user";
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database')[env];
 // let sequelize: Sequelize;
@@ -45,7 +47,10 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 // モデルクラスつくったらここに追加する
 const db: any = {
-  User: User.initialize(sequelize) // initializeはRailsと違ってモデルクラスの初期化でインスタンスかではない
+  // initializeはRailsと違ってモデルクラスの初期化でインスタンスかではない
+  User: User.initialize(sequelize),
+  Organization: Organization.initialize(sequelize),
+  OrganizationUser: OrganizationUser.initialize(sequelize)
 }
 
 // モデルごとのアソシエーション定義関数の実行
