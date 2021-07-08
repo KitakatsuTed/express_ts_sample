@@ -1,8 +1,9 @@
 import {Request, Response} from "express";
 import User from "../models/user";
 import db from "../models";
+import Controller from "./Controller";
 
-class UsersController {
+class UsersController extends Controller {
   async index (req: Request, res: Response) {
     const users: User[] = await db.User.findAll()
 

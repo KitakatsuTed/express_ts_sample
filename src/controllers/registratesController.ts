@@ -62,7 +62,7 @@ export default class RegistratesController {
     const user: User = await db.User.findByPk(req.params.id)
 
     user.destroy()
-    req.flash('success', `新規ユーザー[${user.fullName()}]を削除しました`);
+    req.flash('success', `ユーザー[${user.fullName()}]を削除しました`);
     res.redirect("/users");
   }
 }
