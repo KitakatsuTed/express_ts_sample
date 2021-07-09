@@ -14,10 +14,10 @@ router.all("/account*", (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get("/sign_up", registratesController.newForm)
-router.post("/sign_up", registratesController.create)
-router.get("/account/edit", registratesController.edit)
-router.put("/account", registratesController.update)
-router.delete("/account", registratesController.destroy)
+router.get("/sign_up", (req: Request, res: Response) => registratesController.newForm(req, res))
+router.post("/sign_up", (req: Request, res: Response) => registratesController.create(req, res))
+router.get("/account/edit", (req: Request, res: Response) => registratesController.edit(req, res))
+router.put("/account", (req: Request, res: Response) => registratesController.update(req, res))
+router.delete("/account", (req: Request, res: Response) => registratesController.destroy(req, res))
 
 export default router

@@ -1,0 +1,5 @@
+<h1>組織情報編集</h1>
+
+<%- include('./_form.ejs', { organization: organization, error: validationError, scrfToken: csrfToken, method: 'POST' }) %>
+
+<a href="/organizations/<%= organization.id %>">詳細へ戻る</a>

@@ -65,8 +65,11 @@ app.use(passport.initialize());
 // sessionでアクセス認証を行う https://applingo.tokyo/article/1700
 app.use(passport.session());
 
-app.use(function currentUser(req, res, next) {
-  res.locals.currentUser = req.user;
+app.use((req, res, next) => {
+  // req.userは User | undefinedで安定しないので
+  // Controller#currentUserでログインユーザーをUser型でセットする
+  // これで良いかは議論してみたい
+  res.locals.currentUser = req.user
   next();
 });
 
