@@ -5,7 +5,6 @@ import asyncHandler from "./asyncWrapper";
 const router = express.Router();
 const organizationsController = new OrganizationsController()
 
-router.get("/", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.index(req, res, next))])
 router.get("/new", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.newForm(req, res, next))])
 router.post("/", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.create(req, res, next))])
 router.get("/:id", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.show(req, res, next))])

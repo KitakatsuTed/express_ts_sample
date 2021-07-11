@@ -6,12 +6,6 @@ import Controller from "./Controller";
 import User from "../models/user";
 
 class OrganizationsController extends Controller {
-  async index(req: Request, res: Response, next: NextFunction) {
-    const organizations: Organization[] = await this.currentUser(res).getOrganizations()
-
-    res.render('organizations/index', { organizations })
-  }
-
   async show (req: Request, res: Response, next: NextFunction) {
     const organization: Organization = await db.Organization.findByPk(req.params.id, { rejectOnEmpty: true })
     const users: User[] = await organization.getUsers()

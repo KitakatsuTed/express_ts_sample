@@ -57,7 +57,7 @@ router.get('/login', [loginCheck, asyncHandler(async (req: Request, res: Respons
 
 router.post('/login', loginCheck)
 router.post('/login', [loginCheck, passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/dashboard',
     successFlash: 'ログインしました',
     failureRedirect: '/login',
     failureFlash: 'ログインに失敗しました' // LocalStrategyの第2引数でメッセージを細かくコントロールできるようにすること
