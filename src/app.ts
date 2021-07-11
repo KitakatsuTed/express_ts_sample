@@ -20,8 +20,9 @@ import csrf from 'csurf'
 import routRouter from './routes/root';
 import usersRouter from './routes/users';
 import organizationRouter from './routes/organizations';
+import dashboardRouter from './routes/dashboard';
 import authRouter from './routes/auth';
-import registratesRouter from './routes/registrates';
+import registrationRouter from './routes/registration';
 
 const logDebugger: Debugger = debug(('develop'))
 
@@ -119,7 +120,8 @@ app.use(logging)
 
 app.use('/users', usersRouter);
 app.use('/organizations', organizationRouter);
-app.use('/', registratesRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/', registrationRouter);
 app.use('/', authRouter);
 app.use('/', routRouter);
 
