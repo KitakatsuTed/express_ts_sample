@@ -2,7 +2,7 @@
   <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
   <input type="hidden" name="_method" value=<%= method %> />
 
-  <%- include('../shared/errors.ejs', { error: validationError }) %>
+  <%- include('../shared/errors.ejs', { validationError }) %>
 
   <div class="form-group">
     <label for="organization-name">組織名：</label>

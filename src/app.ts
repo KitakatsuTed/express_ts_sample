@@ -70,6 +70,7 @@ app.use((req, res, next) => {
   // Controller#currentUserでログインユーザーをUser型でセットする
   // これで良いかは議論してみたい
   res.locals.currentUser = req.user
+  res.locals.validationError = null
   next();
 });
 

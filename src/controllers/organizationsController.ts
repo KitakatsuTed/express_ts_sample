@@ -21,7 +21,7 @@ class OrganizationsController extends Controller {
 
   async newForm (req: Request, res: Response, next: NextFunction) {
     const organization: Organization = db.Organization.build()
-    res.render('organizations/new', { organization: organization, validationError: null })
+    res.render('organizations/new', { organization: organization })
   }
 
   async create (req: Request, res: Response, next: NextFunction) {
@@ -34,7 +34,8 @@ class OrganizationsController extends Controller {
       const organization = db.Organization.build({ name: req.body.name })
 
       if (e instanceof ValidationError) {
-        res.render('organizations/new.ejs', { organization: organization, validationError: e, csrfToken: req.csrfToken() });
+        res.locals.validationError = e
+        res.render('organizations/new.ejs', { organization: organization, csrfToken: req.csrfToken() });
       } else {
         throw e
       }
@@ -44,7 +45,7 @@ class OrganizationsController extends Controller {
   async edit (req: Request, res: Response, next: NextFunction) {
     const organization: Organization = await db.Organization.findByPk(req.params.id, { rejectOnEmpty: true })
 
-    res.render('organizations/edit', { organization, validationError: null })
+    res.render('organizations/edit', { organization })
   }
 
   async update (req: Request, res: Response, next: NextFunction) {
@@ -56,7 +57,8 @@ class OrganizationsController extends Controller {
       res.redirect(`/organizations/${organization.id}`);
     } catch(e) {
       if (e instanceof ValidationError) {
-        res.render('organizations/edit.ejs', { organization: organization, validationError: e, csrfToken: req.csrfToken() });
+        res.locals.validationError = e
+        res.render('organizations/edit.ejs', { organization: organization, csrfToken: req.csrfToken() });
       } else {
         throw e
       }

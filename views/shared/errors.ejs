@@ -1,6 +1,6 @@
-<% if (error) { %>
+<% if (validationError) { %>
     <ul>
-        <% error.errors.forEach(function (value, _key) { %>
+        <% validationError.errors.forEach(function (value, _key) { %>
             <li><%= value.message %></li>
         <% }); %>
     </ul>

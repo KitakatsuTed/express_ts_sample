@@ -6,7 +6,7 @@ import {ValidationError} from "sequelize";
 export default class RegistratesController {
   async newForm (req: Request, res: Response, next: NextFunction) {
     const user: User = db.User.build()
-    res.render('registrates/new', { user, validationError: null, csrfToken: req.csrfToken(), layout: 'layouts/simpleLayout.ejs' });
+    res.render('registrates/new', { user, csrfToken: req.csrfToken(), layout: 'layouts/simpleLayout.ejs' });
   }
 
   async create (req: Request, res: Response, next: NextFunction) {
@@ -23,7 +23,8 @@ export default class RegistratesController {
       res.redirect('/login');
     } catch(e) {
       if (e instanceof ValidationError) {
-        res.render('registrates/new.ejs', { user: user, validationError: e, csrfToken: req.csrfToken() });
+        res.locals.validationError = e
+        res.render('registrates/new.ejs', { user: user, csrfToken: req.csrfToken() });
       } else {
         throw e
       }
@@ -34,7 +35,7 @@ export default class RegistratesController {
     // ログインチェックされている前提なのでタイプキャストしたけどこれでいいかどうか
     // ログインチェック通過したら実行時エラーが起きる可能性があるので怖い
     const user: User = req.user as User
-    res.render('registrates/edit', { user: user, validationError: null, csrfToken: req.csrfToken() })
+    res.render('registrates/edit', { user: user, csrfToken: req.csrfToken() })
   }
 
   async update(req: Request, res: Response, next: NextFunction) {
@@ -51,7 +52,8 @@ export default class RegistratesController {
       res.redirect(`/users/${user.id}`);
     } catch(e) {
       if (e instanceof ValidationError) {
-        res.render('registrates/edit.ejs', { user: user, validationError: e, csrfToken: req.csrfToken() });
+        res.locals.validationError = e
+        res.render('registrates/edit.ejs', { user: user, csrfToken: req.csrfToken() });
       } else {
         throw e
       }
