@@ -1,6 +1,13 @@
 <h1><%= organization.name %></h1>
 
 <div>
-    メンバー
+  メンバー
+  <ul>
+    <% users.forEach(function (user, _key) { %>
+      <li>
+        <%= user.fullName() %>
+      </li>
+    <% }) %>
+  </ul>
 </div>
 <a href="/">ホームへ</a>

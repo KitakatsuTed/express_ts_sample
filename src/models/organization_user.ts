@@ -11,6 +11,11 @@ export default class OrganizationUser extends Model {
   static initialize(sequelize: Sequelize) {
     this.init(
       {
+        id: {
+          type: DataTypes.BIGINT,
+          autoIncrement: true,
+          primaryKey: true,
+        },
         organizationId: {
           type: DataTypes.INTEGER,
           allowNull: false,

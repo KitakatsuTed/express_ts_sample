@@ -1,5 +1,5 @@
 <h1>組織登録</h1>
 
-<%- include('./_form.ejs', { organization: organization, error: validationError, scrfToken: csrfToken, method: 'POST' }) %>
+<%- include('./_form.ejs', { url: '/organizations', organization: organization, error: validationError, scrfToken: csrfToken, method: 'POST' }) %>
 
 <a href="/users">一覧に戻る</a>

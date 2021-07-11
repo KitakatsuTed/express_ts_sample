@@ -1,5 +1,31 @@
-import {Model, DataTypes, Sequelize, CreateOptions} from "sequelize"
+import {
+  Model,
+  DataTypes,
+  Sequelize,
+  CreateOptions,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association,
+  HasManySetAssociationsMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationsMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyCreateAssociationMixin,
+  BelongsToManyRemoveAssociationMixin,
+  BelongsToManyRemoveAssociationsMixin,
+  BelongsToManyHasAssociationMixin,
+  BelongsToManyHasAssociationsMixin, BelongsToManyCountAssociationsMixin
+} from "sequelize"
 import bcrypt from 'bcrypt-nodejs'
+import OrganizationUser from "./organization_user";
+import Organization from "./organization";
 
 export default class User extends Model {
   public id!: number
@@ -11,10 +37,43 @@ export default class User extends Model {
   public readonly created_at!: Date
   public readonly updated_at!: Date
 
+  // https://github.com/ahmerb/typescript-sequelize-example
+  // @See https://sequelize.org/master/manual/typescript.html
+  // とりあえずhasMany系のMixinは全部出しといた
+  public getOrganizationUsers!: HasManyGetAssociationsMixin<OrganizationUser>; // Note the null assertions!
+  public setOrganizationUser!: HasManySetAssociationsMixin<OrganizationUser, number>;
+  public addOrganizationUser!: HasManyAddAssociationMixin<OrganizationUser, number>;
+  public createOrganizationUser!: HasManyCreateAssociationMixin<OrganizationUser>;
+  public removeOrganizationUser!: HasManyRemoveAssociationMixin<OrganizationUser, number>;
+  public removeOrganizationUsers!: HasManyRemoveAssociationsMixin<OrganizationUser, number>;
+  public hasOrganizationUser!: HasManyHasAssociationMixin<OrganizationUser, number>; //型第2引数は親モデルのPKの型でよさそう
+  public hasOrganizationUsers!: HasManyHasAssociationsMixin<OrganizationUser, number>; //型第2引数は親モデルのPKの型でよさそう
+  public countOrganizationUsers!: HasManyCountAssociationsMixin;
+
+  public getOrganizations!: BelongsToManyGetAssociationsMixin<Organization>
+  public setOrganization!: BelongsToManySetAssociationsMixin<Organization, number>
+  public addOrganizations!: BelongsToManyAddAssociationsMixin<Organization, number>
+  public addOrganization!: BelongsToManyAddAssociationMixin<Organization, number>
+  public createOrganization!: BelongsToManyCreateAssociationMixin<Organization>
+  public removeOrganization!: BelongsToManyRemoveAssociationMixin<Organization, number>
+  public removeOrganizations!: BelongsToManyRemoveAssociationsMixin<Organization, number>
+  public hasOrganization!: BelongsToManyHasAssociationMixin<Organization, number>
+  public hasOrganizations!: BelongsToManyHasAssociationsMixin<Organization, number>
+  public countOrganizations!: BelongsToManyCountAssociationsMixin
+
+  // 必要なら定義でよい
+  public readonly organizationUsers?: OrganizationUser[];
+  public readonly organizations?: Organization[];
+
   // https://sequelize.org/master/manual/validations-and-constraints.html
   static initialize(sequelize: Sequelize) {
     this.init(
       {
+        id: {
+          type: DataTypes.BIGINT,
+          autoIncrement: true,
+          primaryKey: true,
+        },
         firstName: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -74,14 +133,18 @@ export default class User extends Model {
     return this
   }
 
+  public static associations: {
+    organizationUsers: Association<User, OrganizationUser>;
+  };
+
   static associate(db: any) {
-    this.hasMany(db.OrganizationUser, {
+    this.hasMany(OrganizationUser, {
       foreignKey: 'userId',
-      as: 'organizationUsers'
+      as: 'organizationUsers' // this determines the name in `associations`!
     })
 
-    this.belongsToMany(db.Organization, {
-      through: 'OrganizationUser',
+    this.belongsToMany(Organization, {
+      through: OrganizationUser,
       foreignKey: 'userId',
       otherKey: 'organizationId',
       as: 'organizations'

@@ -137,7 +137,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err.stack)
   // render the error page
   res.status(err.status || 500);
-  res.render('errors');
+  res.render('errors', { layout: false });
 })
 
 export default app;

@@ -1,11 +1,11 @@
-<form method=<%= method %> action="/organizations">
+<form method=<%= method %> action=<%= url %>>
   <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
   <input type="hidden" name="_method" value=<%= method %> />
 
   <%- include('../shared/errors.ejs', { error: validationError }) %>
 
   <div class="form-group">
-    <label for="organization-name">姓：</label>
+    <label for="organization-name">組織名：</label>
     <input type="text" id="organization-name" name="name" class="form-control" value="<%= organization.name %>" />
   </div>
 
