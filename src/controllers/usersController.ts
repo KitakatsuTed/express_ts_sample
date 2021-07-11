@@ -11,7 +11,7 @@ class UsersController extends Controller {
   }
 
   async show (req: Request, res: Response, next: NextFunction) {
-    const user: User = req.user as User
+    const user: User = this.currentUser(res)
 
     res.render('users/show', { user })
   }

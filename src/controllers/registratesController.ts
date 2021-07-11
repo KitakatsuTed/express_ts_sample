@@ -2,8 +2,9 @@ import {NextFunction, Request, Response} from "express";
 import User from "../models/user";
 import db from "../models";
 import {ValidationError} from "sequelize";
+import Controller from "./Controller";
 
-export default class RegistratesController {
+export default class RegistratesController extends Controller {
   async newForm (req: Request, res: Response, next: NextFunction) {
     const user: User = db.User.build()
     res.render('registrates/new', { user, csrfToken: req.csrfToken(), layout: 'layouts/simpleLayout.ejs' });
@@ -34,12 +35,12 @@ export default class RegistratesController {
   async edit (req: Request, res: Response, next: NextFunction) {
     // ログインチェックされている前提なのでタイプキャストしたけどこれでいいかどうか
     // ログインチェック通過したら実行時エラーが起きる可能性があるので怖い
-    const user: User = req.user as User
+    const user: User = this.currentUser(res)
     res.render('registrates/edit', { user: user, csrfToken: req.csrfToken() })
   }
 
   async update(req: Request, res: Response, next: NextFunction) {
-    const user: User = req.user as User
+    const user: User = this.currentUser(res)
 
     try {
       await user.update({

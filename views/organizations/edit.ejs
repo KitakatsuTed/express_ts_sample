@@ -1,5 +1,5 @@
 <h1>組織情報編集</h1>
 
-<%- include('./_form.ejs', { url: `/organizations/${organization.id}`, organization: organization, scrfToken: csrfToken, method: 'PATCH' }) %>
+<%- include('./_form.ejs', { url: `/organizations/${organization.id}`, organization: organization, scrfToken: csrfToken, method: 'PUT' }) %>
 
 <a href="/organizations/<%= organization.id %>">詳細へ戻る</a>

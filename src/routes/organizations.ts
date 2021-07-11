@@ -10,7 +10,7 @@ router.get("/new", [organizationsController.authenticateUser, asyncHandler((req:
 router.post("/", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.create(req, res, next))])
 router.get("/:id", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.show(req, res, next))])
 router.get("/:id/edit", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.edit(req, res, next))])
-router.patch("/:id", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.update(req, res, next))])
+router.put("/:id", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.update(req, res, next))])
 router.delete("/:id", [organizationsController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => organizationsController.destroy(req, res, next))])
 
 export default router
