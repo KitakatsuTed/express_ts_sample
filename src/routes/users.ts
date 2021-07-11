@@ -1,6 +1,6 @@
 import express, {NextFunction, Request, Response} from 'express'
 import UsersController from '../controllers/usersController'
-import asyncHandler from "./asyncWrapper";
+import asyncHandler from "../lib/asyncWrapper";
 
 const router = express.Router();
 const usersController = new UsersController()

@@ -1,6 +1,6 @@
 import express, {NextFunction, Request, Response} from 'express'
 import OrganizationsController from "../controllers/organizationsController";
-import asyncHandler from "./asyncWrapper";
+import asyncHandler from "../lib/asyncWrapper";
 
 const router = express.Router();
 const organizationsController = new OrganizationsController()

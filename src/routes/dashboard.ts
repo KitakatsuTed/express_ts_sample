@@ -1,6 +1,6 @@
 import express, {NextFunction, Request, Response} from 'express'
 import DashboardController from "../controllers/dashboardController";
-import asyncHandler from "./asyncWrapper";
+import asyncHandler from "../lib/asyncWrapper";
 
 const router = express.Router();
 const dashboardController = new DashboardController()

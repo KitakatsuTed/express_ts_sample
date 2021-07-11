@@ -2,7 +2,7 @@ import express, {Request, Response, NextFunction} from 'express'
 import RegistratesController from '../controllers/registrationController'
 const router = express.Router();
 const registrationController = new RegistratesController()
-import asyncHandler from "./asyncWrapper";
+import asyncHandler from "../lib/asyncWrapper";
 
 // ログイン要求のモジュールの良い共通化方法を考える
 router.all("/account*", (req: Request, res: Response, next: NextFunction) => {

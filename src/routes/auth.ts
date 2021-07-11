@@ -3,7 +3,7 @@ import passport from "passport"
 import passportLocal from "passport-local"
 import db from "../models";
 import User from "../models/user";
-import asyncHandler from "./asyncWrapper";
+import asyncHandler from "../lib/asyncWrapper";
 
 const router = express.Router();
 const LocalStrategy = passportLocal.Strategy
