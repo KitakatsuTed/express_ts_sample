@@ -4,13 +4,20 @@ import Organization from "../models/organization";
 import {ValidationError} from "sequelize";
 import Controller from "./Controller";
 import User from "../models/user";
+import Todo from "../models/todo";
+import OrganizationUser from "../models/organization_user";
 
 class OrganizationsController extends Controller {
   async show (req: Request, res: Response, next: NextFunction) {
-    const organization: Organization = await db.Organization.findByPk(req.params.id, { rejectOnEmpty: true })
+    const organization: Organization = await db.Organization.findByPk(req.params.organizationId, { rejectOnEmpty: true })
     const users: User[] = await organization.getUsers()
+    const organizationUser: OrganizationUser = await db.OrganizationUser.findOne(
+      { where: { userId: this.currentUser(res).id, organizationId: organization.id }, rejectOnEmpty: true }
+      )
+    const todos: Todo[] = await organizationUser.getTodos()
+    const todo: Todo = new Todo()
 
-    res.render('organizations/show', { organization, users })
+    res.render('organizations/show', { organization, users, todo, todos, csrfToken: req.csrfToken() })
   }
 
   async newForm (req: Request, res: Response, next: NextFunction) {
@@ -37,13 +44,13 @@ class OrganizationsController extends Controller {
   }
 
   async edit (req: Request, res: Response, next: NextFunction) {
-    const organization: Organization = await db.Organization.findByPk(req.params.id, { rejectOnEmpty: true })
+    const organization: Organization = await db.Organization.findByPk(req.params.organizationId, { rejectOnEmpty: true })
 
     res.render('organizations/edit', { organization })
   }
 
   async update (req: Request, res: Response, next: NextFunction) {
-    const organization: Organization = await db.Organization.findByPk(req.params.id, { rejectOnEmpty: true })
+    const organization: Organization = await db.Organization.findByPk(req.params.organizationId, { rejectOnEmpty: true })
 
     try {
       await organization.update({ name: req.body.name })
@@ -60,7 +67,7 @@ class OrganizationsController extends Controller {
   }
 
   async destroy (req: Request, res: Response, next: NextFunction) {
-    const organization: Organization = await db.Organization.findByPk(req.params.id, { rejectOnEmpty: true })
+    const organization: Organization = await db.Organization.findByPk(req.params.organizationId, { rejectOnEmpty: true })
     await organization.destroy()
 
     req.flash('success', `組織[${organization.name}]を削除しました`);

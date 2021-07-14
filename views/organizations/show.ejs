@@ -1,13 +1,69 @@
 <h1><%= organization.name %></h1>
 
 <div>
-  メンバー
-  <ul>
-    <% users.forEach(function (user, _key) { %>
-      <li>
-        <%= user.fullName() %>
-      </li>
-    <% }) %>
-  </ul>
+    <h2>TODOs</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>タイトル</th>
+            <th>詳細</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% todos.forEach(function (todo, _key) { %>
+            <tr>
+                <td><a href="/organizations/<%= organization.id %>/todos/<%= todo.id %>/edit"><%= todo.title %></a></td>
+                <td><%= todo.description %></td>
+                <td>
+                    <% if (todo.status == 'done') { %>
+                        <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
+                            <input type="hidden" name="_method" value="put">
+                            <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="status" value="undone">
+                            <input type="submit" class="btn btn-dark" value="未完了" />
+                        </form>
+                    <% } else { %>
+                        <div class="d-inline-block">
+                            <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
+                                <input type="hidden" name="_method" value="put">
+                                <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="status" value="done">
+                                <input type="submit" class="btn btn-success" value="完了" />
+                            </form>
+                        </div>
+                        <div class="d-inline-block">
+                            <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
+                                <input type="hidden" name="_method" value="put">
+                                <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="status" value="canceled">
+                                <input type="submit" class="btn btn-secondary" value="キャンセル" />
+                            </form>
+                        </div>
+                        <div class="d-inline-block">
+                            <form method="delete" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>">
+                                <input type="hidden" name="_method" value="delete">
+                                <input type="submit" class="btn btn-danger" value="削除" />
+                            </form>
+                        </div>
+                    <% }%>
+                </td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <%- include('../todos/_form.ejs', { todo, method: 'post', csrfToken: csrfToken, url: `/organizations/${organization.id}/todos` }) %>
+</div>
+
+<div>
+    <h2>メンバー</h2>
+    <ul>
+        <% users.forEach(function (user, _key) { %>
+            <li>
+                <%= user.fullName() %>
+            </li>
+        <% }) %>
+    </ul>
 </div>
 <a href="/">ホームへ</a>

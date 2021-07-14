@@ -3,6 +3,7 @@ import colors from 'colors/safe'
 import User from "./user";
 import Organization from "./organization";
 import OrganizationUser from "./organization_user";
+import Todo from "./todo";
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database')[env];
 // let sequelize: Sequelize;
@@ -50,7 +51,8 @@ const db: any = {
   // initializeはRailsと違ってモデルクラスの初期化でインスタンスかではない
   User: User.initialize(sequelize),
   Organization: Organization.initialize(sequelize),
-  OrganizationUser: OrganizationUser.initialize(sequelize)
+  OrganizationUser: OrganizationUser.initialize(sequelize),
+  Todo: Todo.initialize(sequelize),
 }
 
 // モデルごとのアソシエーション定義関数の実行

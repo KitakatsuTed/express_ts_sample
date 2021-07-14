@@ -1,0 +1,5 @@
+<h1>組織情報編集</h1>
+
+<%- include('../todos/_form.ejs', { todo, method: 'put', csrfToken: csrfToken, url: `/organizations/${organization.id}/todos/${todo.id}` }) %>
+
+<a href="/organizations/<%= organization.id %>">詳細へ戻る</a>

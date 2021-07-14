@@ -20,6 +20,7 @@ import csrf from 'csurf'
 import routRouter from './routes/root';
 import usersRouter from './routes/users';
 import organizationRouter from './routes/organizations';
+import todoRouter from './routes/todos';
 import dashboardRouter from './routes/dashboard';
 import authRouter from './routes/auth';
 import registrationRouter from './routes/registration';
@@ -119,6 +120,7 @@ const logging = (req: Request, res: Response, next: NextFunction) => {
 app.use(logging)
 
 app.use('/users', usersRouter);
+app.use('/organizations', todoRouter);
 app.use('/organizations', organizationRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/', registrationRouter);
