@@ -50,6 +50,7 @@ localhost:8080で開発進めるすすめる
 models/ migrations/ 以下にそれぞれファイルが作られる
 ```shell script
 npx sequelize-cli model:generate --name user --attributes firstName:string,lastName:string,email:string
+npx sequelize-cli migration:create --name name_of_your_migration
 ```
 
 ### 参考

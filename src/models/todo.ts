@@ -57,14 +57,12 @@ export default class Todo extends Model<TodoAttributes, TodoCreationAttributes> 
           }
         },
         status: {
-          type: DataTypes.ENUM('undone', 'done', 'canceled'),
+          type: DataTypes.ENUM(...Object.values(Enum.Todo.STATUS_LEVEL)),
           allowNull: false,
           defaultValue: Enum.Todo.STATUS_LEVEL.UNDONE,
           validate: {
             isIn: {
-              args: [
-                ['undone', 'done', 'canceled']
-              ],
+              args: [Object.values(Enum.Todo.STATUS_LEVEL)],
               msg: '不正なステータスです'
             }
           }
@@ -88,4 +86,10 @@ export default class Todo extends Model<TodoAttributes, TodoCreationAttributes> 
       as: 'user'
     })
   }
+
+  // enum系のメソッドはentityに直接定義よりenum側(多分type?)に定義する方法があるとよさげ
+  statusDone(): boolean { return this.status == Enum.Todo.STATUS_LEVEL.DONE }
+  statusUndone(): boolean { return this.status == Enum.Todo.STATUS_LEVEL.UNDONE }
+  statusCanceled(): boolean { return this.status == Enum.Todo.STATUS_LEVEL.CANCELED }
+
 }

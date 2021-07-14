@@ -16,11 +16,11 @@
                 <td><a href="/organizations/<%= organization.id %>/todos/<%= todo.id %>/edit"><%= todo.title %></a></td>
                 <td><%= todo.description %></td>
                 <td>
-                    <% if (todo.status == 'done') { %>
+                    <% if (todo.statusDone()) { %>
                         <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
                             <input type="hidden" name="_method" value="put">
                             <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <input type="hidden" name="status" value="undone">
+                            <input type="hidden" name="status" value=<%= statusLevel.UNDONE %>>
                             <input type="submit" class="btn btn-dark" value="未完了" />
                         </form>
                     <% } else { %>
@@ -28,7 +28,7 @@
                             <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
                                 <input type="hidden" name="_method" value="put">
                                 <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <input type="hidden" name="status" value="done">
+                                <input type="hidden" name="status" value=<%= statusLevel.DONE %>>
                                 <input type="submit" class="btn btn-success" value="完了" />
                             </form>
                         </div>
@@ -36,7 +36,7 @@
                             <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
                                 <input type="hidden" name="_method" value="put">
                                 <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <input type="hidden" name="status" value="canceled">
+                                <input type="hidden" name="status" value=<%= statusLevel.CANCELED %>>
                                 <input type="submit" class="btn btn-secondary" value="キャンセル" />
                             </form>
                         </div>

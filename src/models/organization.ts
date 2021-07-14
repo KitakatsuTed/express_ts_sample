@@ -25,6 +25,7 @@ import Transaction, {
 import OrganizationUser from "./organization_user";
 import User from "./user";
 import db from "./index";
+import {Enum} from "./enums/organizationUser";
 
 interface OrganizationAttributes {
   id: number;
@@ -117,7 +118,7 @@ export default class Organization extends Model<OrganizationAttributes, Organiza
     // @ts-ignore transactionの型定義がnamespaceの方を参照してしまうのでignoreしてみた
     const result: Organization = await db.sequelize.transaction(async (t: Transaction) => {
       const organization: Organization = await this.create(attr)
-      await organization.addUser(user)
+      await organization.addUser(user, { through: { role: Enum.OrganizationUser.MEMBER_ROLE.MANAGER }})
 
       return organization
     })

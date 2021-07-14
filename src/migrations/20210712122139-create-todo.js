@@ -28,7 +28,7 @@ module.exports = {
       status: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: 0
+        defaultValue: 'undone'
       },
       createdAt: {
         allowNull: false,

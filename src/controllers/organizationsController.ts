@@ -6,6 +6,7 @@ import Controller from "./Controller";
 import User from "../models/user";
 import Todo from "../models/todo";
 import OrganizationUser from "../models/organization_user";
+import {Enum} from "../models/enums/todo";
 
 class OrganizationsController extends Controller {
   async show (req: Request, res: Response, next: NextFunction) {
@@ -17,7 +18,7 @@ class OrganizationsController extends Controller {
     const todos: Todo[] = await organizationUser.getTodos()
     const todo: Todo = new Todo()
 
-    res.render('organizations/show', { organization, users, todo, todos, csrfToken: req.csrfToken() })
+    res.render('organizations/show', { organization, users, todo, todos, csrfToken: req.csrfToken(), statusLevel: Enum.Todo.STATUS_LEVEL })
   }
 
   async newForm (req: Request, res: Response, next: NextFunction) {

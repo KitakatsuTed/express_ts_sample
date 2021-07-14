@@ -7,14 +7,29 @@ import {
   HasManyAddAssociationMixin,
   HasManyCreateAssociationMixin,
   HasManyRemoveAssociationMixin,
-  HasManyRemoveAssociationsMixin, HasManyHasAssociationMixin, HasManyHasAssociationsMixin, HasManyCountAssociationsMixin
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
+  Optional
 } from "sequelize";
 import Todo from "./todo";
+import {Enum} from "./enums/organizationUser";
 
-export default class OrganizationUser extends Model {
+interface OrganizationUserAttributes {
+  id: number;
+  role: Enum.OrganizationUser.Role;
+  organizationId: number;
+  userId: number;
+}
+
+interface OrganizationUserCreationAttributes extends Optional<OrganizationUserAttributes, "id"> {}
+
+export default class Organization_user extends Model<OrganizationUserAttributes, OrganizationUserCreationAttributes> {
   public id!: number
   public organizationId!: number
   public userId!: number
+  public role!: Enum.OrganizationUser.Role
 
   public readonly created_at!: Date
   public readonly updated_at!: Date
@@ -38,6 +53,17 @@ export default class OrganizationUser extends Model {
           type: DataTypes.BIGINT,
           autoIncrement: true,
           primaryKey: true,
+        },
+        role: {
+          type: DataTypes.ENUM(...Object.values(Enum.OrganizationUser.MEMBER_ROLE)),
+          allowNull: false,
+          defaultValue: Enum.OrganizationUser.MEMBER_ROLE.NORMAL,
+          validate: {
+            isIn: {
+              args: [Object.values(Enum.OrganizationUser.MEMBER_ROLE)],
+              msg: '不正なステータスです'
+            }
+          }
         },
         organizationId: {
           type: DataTypes.INTEGER,
