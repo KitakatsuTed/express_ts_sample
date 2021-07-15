@@ -5,6 +5,6 @@ import asyncHandler from "../lib/asyncWrapper";
 const router = express.Router();
 const dashboardController = new DashboardController()
 
-router.get("/", [dashboardController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => dashboardController.index(req, res, next))])
+router.get("/dashboard", [dashboardController.authenticateUser, asyncHandler((req: Request, res: Response, next: NextFunction) => dashboardController.index(req, res, next))])
 
 export default router
