@@ -10,7 +10,9 @@
     "build": "npm-run-all clean tsc",
     "start": "node ./dist/bin/www",
     "client": "webpack-cli serve --config ./config/webpack-config.js --open --mode development",
-    "build-client": "webpack --config ./config/webpack-config.js --mode development"
+    "build-client": "webpack --config ./config/webpack-config.js --mode development",
+    "routes": "ts-node-dev ./src/bin/routes",
+    "console": "ts-node-dev ./src/bin/console"
   },
   "dependencies": {
     "@types/express-ejs-layouts": "^2.3.2",
