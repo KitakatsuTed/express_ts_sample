@@ -13,7 +13,11 @@
         <tbody>
         <% todos.forEach(function (todo, _key) { %>
             <tr>
-                <td><a href="/organizations/<%= organization.id %>/todos/<%= todo.id %>/edit"><%= todo.title %></a></td>
+                <td><a href="/organizations/<%= organization.id %>/todos/<%= todo.id %>/edit"><%= todo.title %></a>
+                    <% if (todo.statusCanceled()) { %>
+                        <span>キャンセル</span>
+                    <% } %>
+                </td>
                 <td><%= todo.description %></td>
                 <td>
                     <% if (todo.statusDone()) { %>
