@@ -22,7 +22,7 @@ import Transaction, {
   BelongsToManyHasAssociationsMixin,
   BelongsToManyCountAssociationsMixin, Optional
 } from "sequelize";
-import OrganizationUser from "./organization_user";
+import OrganizationUser from "./organizationUser";
 import User from "./user";
 import db from "./index";
 import {Enum} from "./enums/organizationUser";

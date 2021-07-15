@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import colors from 'colors/safe'
 import User from "./user";
 import Organization from "./organization";
-import OrganizationUser from "./organization_user";
+import OrganizationUser from "./organizationUser";
 import Todo from "./todo";
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database')[env];

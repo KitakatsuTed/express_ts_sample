@@ -4,7 +4,7 @@ import Organization from "../models/organization";
 import {ValidationError} from "sequelize";
 import Controller from "./Controller";
 import User from "../models/user";
-import OrganizationUser from "../models/organization_user";
+import OrganizationUser from "../models/organizationUser";
 import Todo from "../models/todo";
 import {Enum} from "../models/enums/todo";
 

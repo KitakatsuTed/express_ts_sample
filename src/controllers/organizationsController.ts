@@ -5,7 +5,7 @@ import {ValidationError} from "sequelize";
 import Controller from "./Controller";
 import User from "../models/user";
 import Todo from "../models/todo";
-import OrganizationUser from "../models/organization_user";
+import OrganizationUser from "../models/organizationUser";
 import {Enum} from "../models/enums/todo";
 
 class OrganizationsController extends Controller {

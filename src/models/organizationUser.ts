@@ -25,7 +25,7 @@ interface OrganizationUserAttributes {
 
 interface OrganizationUserCreationAttributes extends Optional<OrganizationUserAttributes, "id"> {}
 
-export default class Organization_user extends Model<OrganizationUserAttributes, OrganizationUserCreationAttributes> {
+export default class OrganizationUser extends Model<OrganizationUserAttributes, OrganizationUserCreationAttributes> {
   public id!: number
   public organizationId!: number
   public userId!: number

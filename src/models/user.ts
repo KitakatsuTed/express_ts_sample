@@ -24,7 +24,7 @@ import {
   BelongsToManyHasAssociationsMixin, BelongsToManyCountAssociationsMixin
 } from "sequelize"
 import bcrypt from 'bcrypt-nodejs'
-import OrganizationUser from "./organization_user";
+import OrganizationUser from "./organizationUser";
 import Organization from "./organization";
 
 export default class User extends Model {
