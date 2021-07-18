@@ -1,7 +1,7 @@
 <h1><%= organization.name %></h1>
 
 <div>
-    <h2>TODOs</h2>
+    <h2>My TODOs</h2>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -63,11 +63,18 @@
 <div>
     <h2>メンバー</h2>
     <ul>
-        <% users.forEach(function (user, _key) { %>
+        <% organizationUsers.forEach(function (organizationUser, _key) { %>
             <li>
-                <%= user.fullName() %>
+                <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>">
+                    <%= organizationUser.user.fullName() %>
+                </a>
             </li>
         <% }) %>
     </ul>
+    <div>
+        <a href="/organizations/<%= organization.id %>/organization_users/new">
+            メンバー追加
+        </a>
+    </div>
 </div>
 <a href="/">ホームへ</a>

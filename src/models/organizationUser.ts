@@ -11,14 +11,17 @@ import {
   HasManyHasAssociationMixin,
   HasManyHasAssociationsMixin,
   HasManyCountAssociationsMixin,
-  Optional
+  Optional, BelongsToGetAssociationMixin, BelongsToSetAssociationMixin, BelongsToCreateAssociationMixin
 } from "sequelize";
 import Todo from "./todo";
 import {Enum} from "./enums/organizationUser";
+import Organization from "./organization";
+import User from "./user";
 
 interface OrganizationUserAttributes {
   id: number;
   role: Enum.OrganizationUser.Role;
+  status: Enum.OrganizationUser.Role;
   organizationId: number;
   userId: number;
 }
@@ -30,6 +33,7 @@ export default class OrganizationUser extends Model<OrganizationUserAttributes, 
   public organizationId!: number
   public userId!: number
   public role!: Enum.OrganizationUser.Role
+  public status!: Enum.OrganizationUser.Status
 
   public readonly created_at!: Date
   public readonly updated_at!: Date
@@ -44,7 +48,17 @@ export default class OrganizationUser extends Model<OrganizationUserAttributes, 
   public hasTodos!: HasManyHasAssociationsMixin<Todo, number>;
   public countTodos!: HasManyCountAssociationsMixin;
 
+  public getOrganization!: BelongsToGetAssociationMixin<Organization>;
+  public setOrganization!: BelongsToSetAssociationMixin<Organization, number>;
+  public createOrganization!: BelongsToCreateAssociationMixin<Organization>;
+
+  public getUser!: BelongsToGetAssociationMixin<User>;
+  public setUser!: BelongsToSetAssociationMixin<User, number>;
+  public createUser!: BelongsToCreateAssociationMixin<User>;
+
   public readonly todos?: Todo[];
+  public readonly user?: User;
+  public readonly organization?: Organization;
 
   static initialize(sequelize: Sequelize) {
     this.init(
@@ -61,6 +75,17 @@ export default class OrganizationUser extends Model<OrganizationUserAttributes, 
           validate: {
             isIn: {
               args: [Object.values(Enum.OrganizationUser.MEMBER_ROLE)],
+              msg: '不正なステータスです'
+            }
+          }
+        },
+        status: {
+          type: DataTypes.ENUM(...Object.values(Enum.OrganizationUser.ACCEPT_STATUS)),
+          allowNull: false,
+          defaultValue: Enum.OrganizationUser.ACCEPT_STATUS.WAIT,
+          validate: {
+            isIn: {
+              args: [Object.values(Enum.OrganizationUser.ACCEPT_STATUS)],
               msg: '不正なステータスです'
             }
           }
@@ -109,7 +134,7 @@ export default class OrganizationUser extends Model<OrganizationUserAttributes, 
 
     this.hasMany(db.Todo, {
       foreignKey: 'organizationUserId',
-      as: 'Todos',
+      as: 'todos',
       onDelete: 'CASCADE',
       hooks: true
     })

@@ -10,6 +10,12 @@ export namespace Enum {
       MANAGER: 'manager',
     } as const
 
+    export const ACCEPT_STATUS = {
+      WAIT: 'wait',
+      ACCEPT: 'accept',
+    } as const
+
     export type Role = typeof MEMBER_ROLE[keyof typeof MEMBER_ROLE]
+    export type Status = typeof ACCEPT_STATUS[keyof typeof ACCEPT_STATUS]
   }
 }

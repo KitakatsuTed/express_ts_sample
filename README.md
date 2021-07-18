@@ -43,6 +43,11 @@ npm run client # クライアント側サーバー(webpack)起動 :8080
 npm run dev # バックエンド側サーバー起動 :3000
 ```
 
+### メールサーバー立ち上げ
+```shell script
+maildev # 1080ポートでメール確認 1025ポートsmtpサーバー起動
+```
+
 ### ルーティング出力
 ```shell script
 ./src/bin/routes

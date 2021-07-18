@@ -118,11 +118,19 @@ export default class Organization extends Model<OrganizationAttributes, Organiza
     // @ts-ignore transactionの型定義がnamespaceの方を参照してしまうのでignoreしてみた
     const result: Organization = await db.sequelize.transaction(async (t: Transaction) => {
       const organization: Organization = await this.create(attr)
-      await organization.addUser(user, { through: { role: Enum.OrganizationUser.MEMBER_ROLE.MANAGER }})
+      await organization.addUser(user, { through: { role: Enum.OrganizationUser.MEMBER_ROLE.MANAGER, status: Enum.OrganizationUser.ACCEPT_STATUS.ACCEPT }})
 
       return organization
     })
 
     return result
+  }
+
+  async isMember(user: User): Promise<boolean> {
+    return await this.countOrganizationUsers({ where: { userId: user.id } }) > 0
+  }
+
+  async isManager(user: User): Promise<boolean> {
+    return await this.countOrganizationUsers({ where: { userId: user.id, role: Enum.OrganizationUser.MEMBER_ROLE.MANAGER } }) > 0
   }
 }

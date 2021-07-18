@@ -4,6 +4,10 @@
 			"role": {
 				"normal": "normal",
 				"manager": "manager"
+			},
+			"status": {
+				"wait": "wait",
+				"accept": "accept"
 			}
 		},
 		"Todo": {

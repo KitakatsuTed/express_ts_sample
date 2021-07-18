@@ -2,6 +2,7 @@ import BaseMailer from "./baseMailer";
 import OrganizationUser from "../models/organizationUser";
 import Organization from "../models/organization";
 import User from "../models/user";
+import * as fs from "fs";
 
 export default class OrganizationMailer extends BaseMailer {
   static async inviteMember(organizationUser: OrganizationUser) {
@@ -10,9 +11,11 @@ export default class OrganizationMailer extends BaseMailer {
     const mailData = {
       to: user.email,
       text: '組織に招待されました。',
-      html: `組織に招待されました。<a href="/organizations/${organization.id}/organizatin_users/accept" methods="post">こちら</a>から承認してください。`,
+      html: `組織に招待されました。<a href="/organizations/${organization.id}/organization_users/accept">こちら</a>から承認してください。`,
       subject: '組織に招待されました'
     }
+    // TODO テンプレートを利用してviewファイルにhtmlをかきたい
+    // fs.readFileSync('./views/email/test.html', 'utf8')
 
     await this.sendMail(mailData)
   }
