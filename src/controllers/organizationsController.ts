@@ -10,15 +10,15 @@ import {Enum} from "../models/enums/todo";
 
 class OrganizationsController extends Controller {
   async show (req: Request, res: Response, next: NextFunction) {
-    const organization: Organization = await db.Organization.findByPk(req.params.organizationId, { rejectOnEmpty: true })
-    const users: User[] = await organization.getUsers()
+    const organization: Organization = await db.Organization.findByPk(req.params.organizationId, { rejectOnEmpty: new Error() })
+    const organizationUsers: OrganizationUser[] = await organization.getOrganizationUsers({ include: [{ model: User, as: 'user' }] })// as はモデルに定義したプロパティと同名にすること おそらく内部的にasのプロパティをさがしている
     const organizationUser: OrganizationUser = await db.OrganizationUser.findOne(
       { where: { userId: this.currentUser(res).id, organizationId: organization.id }, rejectOnEmpty: true }
       )
     const todos: Todo[] = await organizationUser.getTodos()
     const todo: Todo = new Todo()
 
-    res.render('organizations/show', { organization, users, todo, todos, csrfToken: req.csrfToken(), statusLevel: Enum.Todo.STATUS_LEVEL })
+    res.render('organizations/show', { organization, organizationUsers, todo, todos, csrfToken: req.csrfToken(), statusLevel: Enum.Todo.STATUS_LEVEL })
   }
 
   async newForm (req: Request, res: Response, next: NextFunction) {
