@@ -1,0 +1,17 @@
+{
+	"models": {
+		"OrganizationUser": {
+			"role": {
+				"normal": "通常",
+				"manager": "管理者"
+			}
+		},
+		"Todo": {
+			"status": {
+				"undone": "未完了",
+				"done": "完了",
+				"canceled": "キャンセル"
+			}
+		}
+	}
+}

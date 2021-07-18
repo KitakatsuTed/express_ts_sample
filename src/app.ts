@@ -16,10 +16,18 @@ import expressLayouts from 'express-ejs-layouts'
 import methodOverride from 'method-override'
 import debug, {Debugger} from 'debug'
 import csrf from 'csurf'
+import I18n from 'i18n'
 
 import indexRouter from './routes/index';
 
 const logDebugger: Debugger = debug(('develop'))
+
+I18n.configure({
+  locales: ['ja', 'en'],
+  defaultLocale: 'ja',
+  directory: path.join(__dirname, 'config', 'locales'),
+  objectNotation: true
+});
 
 // .envはあればよみこまれ、なければ自動的に無視される
 const ENV_PATH = path.join(__dirname, '../.env');
@@ -53,6 +61,8 @@ app.use(session({
     maxAge: 180000
   }
 }));
+
+app.use(I18n.init);
 
 // sessionを利用する仕組みなのでsession周りの設定の後に記述すること
 app.use(csrf({ cookie: true }))
