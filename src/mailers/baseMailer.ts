@@ -25,6 +25,7 @@ export default class BaseMailer {
       if(error) {
         console.log(error); // エラー情報
       } else {
+        console.log("html data ======================>\n", mailData.html);
         console.log(info);  // 送信したメールの情報
       }
     })

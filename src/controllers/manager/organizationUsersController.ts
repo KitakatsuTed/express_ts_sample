@@ -8,7 +8,6 @@ import {ValidationError} from "sequelize";
 import Todo from "../../models/todo";
 import {Enum} from "../../models/enums/organizationUser";
 import OrganizationMailer from "../../mailers/organizationMailer";
-import organizationUser from "../../models/organizationUser";
 
 class OrganizationUsersController extends Controller {
   async show (req: Request, res: Response, next: NextFunction) {
