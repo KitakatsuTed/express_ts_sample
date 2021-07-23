@@ -60,21 +60,23 @@
     <%- include('../todos/_form.ejs', { todo, method: 'post', csrfToken: csrfToken, url: `/organizations/${organization.id}/todos` }) %>
 </div>
 
-<div>
-    <h2>メンバー</h2>
-    <ul>
-        <% organizationUsers.forEach(function (organizationUser, _key) { %>
-            <li>
-                <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>">
-                    <%= organizationUser.user.fullName() %>
-                </a>
-            </li>
-        <% }) %>
-    </ul>
+<% if (organizationUser.isRoleManager()) { %>
     <div>
-        <a href="/organizations/<%= organization.id %>/organization_users/new">
-            メンバー追加
-        </a>
+        <h2>メンバー</h2>
+        <ul>
+            <% organizationUsers.forEach(function (organizationUser, _key) { %>
+                <li>
+                    <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>">
+                        <%= organizationUser.user.fullName() %>
+                    </a>
+                </li>
+            <% }) %>
+        </ul>
+        <div>
+            <a href="/organizations/<%= organization.id %>/organization_users/new">
+                メンバー追加
+            </a>
+        </div>
     </div>
-</div>
+<% } %>
 <a href="/">ホームへ</a>

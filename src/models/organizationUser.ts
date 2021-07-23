@@ -146,4 +146,10 @@ export default class OrganizationUser extends Model<OrganizationUserAttributes, 
       hooks: true
     })
   }
+
+  // enum
+  isStatusAccept(): boolean { return this.status == Enum.OrganizationUser.ACCEPT_STATUS.ACCEPT }
+  isStatusWait(): boolean { return this.status == Enum.OrganizationUser.ACCEPT_STATUS.WAIT }
+  isRoleManager(): boolean { return this.role == Enum.OrganizationUser.MEMBER_ROLE.MANAGER }
+  isRoleNormal(): boolean { return this.role == Enum.OrganizationUser.MEMBER_ROLE.NORMAL }
 }
