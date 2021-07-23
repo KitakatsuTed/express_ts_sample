@@ -11,8 +11,8 @@ export default class OrganizationMailer extends BaseMailer {
     const user: User = await organizationUser.getUser()
 
     const html = await ejs.renderFile(
-      appRoot +"/views/mailers/organizationMailer/inviteMember.ejs",
-      { organization: organization }
+      appRoot + "/views/mailers/organizationMailer/inviteMember.ejs",
+      { organization: organization, acceptPath: `${process.env.HOSTNAME}/organizations/${organization.id}/organization_users/accept` }
       );
 
     const mailData = {
