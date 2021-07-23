@@ -6,13 +6,13 @@ import Controller from "./Controller";
 import User from "../models/user";
 import Todo from "../models/todo";
 import OrganizationUser from "../models/organizationUser";
-import {Enum} from "../models/enums/todo";
+import {Enum} from "../models/enums/";
 
 class OrganizationsController extends Controller {
   async show (req: Request, res: Response, next: NextFunction) {
     const organization: Organization = await db.Organization.findByPk(req.params.organizationId, { rejectOnEmpty: new Error() })
-    const organizationUsers: OrganizationUser[] = await organization.getOrganizationUsers({ include: [{ model: User, as: 'user' }] })// as はモデルに定義したプロパティと同名にすること おそらく内部的にasのプロパティをさがしている
-    const organizationUser: OrganizationUser = await db.OrganizationUser.findOne(
+    const organizationUsers: OrganizationUser[] = await organization.getOrganizationUsers({ where: { status: Enum.OrganizationUser.ACCEPT_STATUS.ACCEPT }, include: [{ model: User, as: 'user' }] })// as はモデルに定義したプロパティと同名にすること おそらく内部的にasのプロパティをさがしている
+    const organizationUser: OrganizationUser = await db.OrganizationUser.scope('accept').findOne(
       { where: { userId: this.currentUser(res).id, organizationId: organization.id }, rejectOnEmpty: true }
       )
     const todos: Todo[] = await organizationUser.getTodos()

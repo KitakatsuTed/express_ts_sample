@@ -25,7 +25,7 @@ import Transaction, {
 import OrganizationUser from "./organizationUser";
 import User from "./user";
 import db from "./index";
-import {Enum} from "./enums/organizationUser";
+import {Enum} from "./enums";
 
 interface OrganizationAttributes {
   id: number;

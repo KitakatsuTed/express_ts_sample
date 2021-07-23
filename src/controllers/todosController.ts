@@ -6,7 +6,7 @@ import Controller from "./Controller";
 import User from "../models/user";
 import OrganizationUser from "../models/organizationUser";
 import Todo from "../models/todo";
-import {Enum} from "../models/enums/todo";
+import {Enum} from "../models/enums";
 
 class OrganizationsController extends Controller {
   // async show (req: Request, res: Response, next: NextFunction) {

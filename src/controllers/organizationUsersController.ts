@@ -3,7 +3,7 @@ import Controller from "./Controller";
 import Organization from "../models/organization";
 import db from "../models";
 import OrganizationUser from "../models/organizationUser";
-import {Enum} from "../models/enums/organizationUser";
+import {Enum} from "../models/enums/";
 
 class OrganizationUsersController extends Controller {
   async update (req: Request, res: Response, next: NextFunction) {

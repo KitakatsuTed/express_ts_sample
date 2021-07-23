@@ -14,7 +14,7 @@ import {
   Optional, BelongsToGetAssociationMixin, BelongsToSetAssociationMixin, BelongsToCreateAssociationMixin
 } from "sequelize";
 import Todo from "./todo";
-import {Enum} from "./enums/organizationUser";
+import {Enum} from "./enums";
 import Organization from "./organization";
 import User from "./user";
 
@@ -110,6 +110,13 @@ export default class OrganizationUser extends Model<OrganizationUserAttributes, 
         },
       },
       {
+        scopes: {
+          accept: {
+            where: {
+              status: Enum.OrganizationUser.ACCEPT_STATUS.ACCEPT
+            }
+          }
+        },
         indexes: [{unique: true, fields: ['userId', 'organizationId']}],
         sequelize,
         modelName: 'OrganizationUser',

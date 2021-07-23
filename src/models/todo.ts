@@ -1,5 +1,5 @@
 import {Model, DataTypes, Sequelize, Optional} from "sequelize";
-import {Enum} from "./enums/todo"
+import {Enum} from "./enums";
 
 interface TodoAttributes {
   id: number;

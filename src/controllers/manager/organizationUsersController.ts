@@ -6,12 +6,12 @@ import User from "../../models/user";
 import OrganizationUser from "../../models/organizationUser";
 import {ValidationError} from "sequelize";
 import Todo from "../../models/todo";
-import {Enum} from "../../models/enums/organizationUser";
+import {Enum} from "../../models/enums";
 import OrganizationMailer from "../../mailers/organizationMailer";
 
 class OrganizationUsersController extends Controller {
   async show (req: Request, res: Response, next: NextFunction) {
-    const organizationUser: OrganizationUser = await db.OrganizationUser.findOne(
+    const organizationUser: OrganizationUser = await db.OrganizationUser.scope('accept').findOne(
       {
         where: { id: req.params.organizationUserId, organizationId: req.params.organizationId },
         include: [{ model: User, as: 'user' }, { model: Todo, as: 'todos' }, { model: Organization, as: 'organization'} ],
@@ -44,7 +44,7 @@ class OrganizationUsersController extends Controller {
   }
 
   async edit (req: Request, res: Response, next: NextFunction) {
-    const organizationUser: OrganizationUser = await db.OrganizationUser.findOne(
+    const organizationUser: OrganizationUser = await db.OrganizationUser.scope('accept').findOne(
       {
         where: { id: req.params.organizationUserId, organizationId: req.params.organizationId },
         include: [{ model: Organization, as: 'organization'} ],
@@ -56,7 +56,7 @@ class OrganizationUsersController extends Controller {
   }
 
   async update (req: Request, res: Response, next: NextFunction) {
-    const organizationUser: OrganizationUser = await db.OrganizationUser.findOne(
+    const organizationUser: OrganizationUser = await db.OrganizationUser.scope('accept').findOne(
       {
         where: { id: req.params.organizationUserId, organizationId: req.params.organizationId },
         include: [{ model: Organization, as: 'organization'} ],
@@ -80,7 +80,7 @@ class OrganizationUsersController extends Controller {
   }
 
   async destroy (req: Request, res: Response, next: NextFunction) {
-    const organizationUser: OrganizationUser = await db.OrganizationUser.findOne(
+    const organizationUser: OrganizationUser = await db.OrganizationUser.scope('accept').findOne(
       {
         where: { id: req.params.organizationUserId, organizationId: req.params.organizationId },
         include: [{ model: Organization, as: 'organization'}],
