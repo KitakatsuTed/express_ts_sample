@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<title>ページが表示できません</title>
-</head>
-<body>
-  <h1><%= message %></h1>
-  <h2><%= error.status %></h2>
-  <p><%= error.stack %></p>
-</body>
+  <head>
+    <title>ページが表示できません</title>
+    <link rel='stylesheet' type="text/css" href='/bootstrap/bootstrap.css' />
+  </head>
+  <body>
+    <h1><%= message %></h1>
+    <h2><%= error.status %></h2>
+    <p><%= error.stack %></p>
+  </body>
 </html>

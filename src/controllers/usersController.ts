@@ -1,16 +1,17 @@
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import User from "../models/user";
 import db from "../models";
+import Controller from "./Controller";
 
-class UsersController {
-  async index (req: Request, res: Response) {
+class UsersController extends Controller {
+  async index (req: Request, res: Response, next: NextFunction) {
     const users: User[] = await db.User.findAll()
 
     res.render('users/index', { users });
   }
 
-  async show (req: Request, res: Response) {
-    const user: User = req.user as User
+  async show (req: Request, res: Response, next: NextFunction) {
+    const user: User = this.currentUser(res)
 
     res.render('users/show', { user })
   }

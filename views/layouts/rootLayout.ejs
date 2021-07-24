@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>express_ts_sample</title>
+    <link rel='stylesheet' type="text/css" href='/bootstrap/bootstrap.css' />
+</head>
+<body>
+
+<div class="container">
+    <%- include('./header.ejs') %>
+    <%- include('../shared/flash.ejs', { message: flashMessage } ) %>
+    <%- body %>
+    <%- include('./footer.ejs') %>
+</div>
+
+</body>
+</html>

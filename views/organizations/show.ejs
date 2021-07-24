@@ -1,0 +1,103 @@
+<h1><%= organization.name %></h1>
+
+<div>
+    <h2>My TODOs</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>タイトル</th>
+            <th>詳細</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% todos.forEach(function (todo, _key) { %>
+            <tr>
+                <td><a href="/organizations/<%= organization.id %>/todos/<%= todo.id %>/edit"><%= todo.title %></a>
+                    <% if (todo.statusCanceled()) { %>
+                        <span>キャンセル</span>
+                    <% } %>
+                </td>
+                <td><%= todo.description %></td>
+                <td>
+                    <% if (todo.statusDone()) { %>
+                        <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
+                            <input type="hidden" name="_method" value="put">
+                            <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="status" value=<%= statusLevel.UNDONE %>>
+                            <input type="submit" class="btn btn-dark" value="未完了" />
+                        </form>
+                    <% } else { %>
+                        <div class="d-inline-block">
+                            <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
+                                <input type="hidden" name="_method" value="put">
+                                <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="status" value=<%= statusLevel.DONE %>>
+                                <input type="submit" class="btn btn-success" value="完了" />
+                            </form>
+                        </div>
+                        <div class="d-inline-block">
+                            <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>/status">
+                                <input type="hidden" name="_method" value="put">
+                                <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="status" value=<%= statusLevel.CANCELED %>>
+                                <input type="submit" class="btn btn-secondary" value="キャンセル" />
+                            </form>
+                        </div>
+                        <div class="d-inline-block">
+                            <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>">
+                                <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="_method" value="delete">
+                                <input type="submit" class="btn btn-danger" value="削除" />
+                            </form>
+                        </div>
+                    <% }%>
+                </td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <%- include('../todos/_form.ejs', { todo, method: 'post', csrfToken: csrfToken, url: `/organizations/${organization.id}/todos` }) %>
+</div>
+
+<% if (organizationUser.isRoleManager()) { %>
+    <div>
+        <h2>メンバー</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>名前</th>
+                <th>ロール</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% organizationUsers.forEach(function (organizationUser, _key) { %>
+                    <tr>
+                        <td>
+                            <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>">
+                                <%= organizationUser.user.fullName() %>
+                            </a>
+                        </td>
+                        <td>
+                            <%= __(`models.OrganizationUser.role.${organizationUser.role}`) %>
+                        </td>
+                        <td>
+                            <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>/edit">
+                                編集
+                            </a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <div>
+            <a href="/organizations/<%= organization.id %>/organization_users/new">
+                メンバー追加
+            </a>
+        </div>
+    </div>
+<% } %>
+<a href="/">ホームへ</a>

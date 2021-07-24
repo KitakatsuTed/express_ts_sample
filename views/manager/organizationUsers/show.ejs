@@ -1,0 +1,39 @@
+<h1><%= organizationUser.user.fullName() %>(<%= __(`models.OrganizationUser.role.${organizationUser.role}`) %>)</h1>
+
+<div>
+    <a href="/organizations/<%= organizationUser.organization.id %>/organization_users/<%= organizationUser.id %>/edit" class="btn btn-primary">
+        メンバー情報編集
+    </a>
+    <form method="post" action="/organizations/<%= organizationUser.organization.id %>/organization_users/<%= organizationUser.id %>">
+        <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" class="btn btn-danger" value="削除" />
+    </form>
+</div>
+
+<div>
+    <h2>TODOs</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>タイトル</th>
+            <th>詳細</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% organizationUser.todos.forEach(function (todo, _key) { %>
+            <tr>
+                <td>
+                    <%= todo.title %>
+                    <% if (todo.statusCanceled()) { %>
+                        <span>キャンセル</span>
+                    <% } %>
+                </td>
+                <td><%= todo.description %></td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<a href="/organizations/<%= organizationUser.organization.id %>">組織画面へ</a>

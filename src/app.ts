@@ -16,13 +16,18 @@ import expressLayouts from 'express-ejs-layouts'
 import methodOverride from 'method-override'
 import debug, {Debugger} from 'debug'
 import csrf from 'csurf'
+import I18n from 'i18n'
 
-import routRouter from './routes/root';
-import usersRouter from './routes/users';
-import authRouter from './routes/auth';
-import registratesRouter from './routes/registrates';
+import indexRouter from './routes/index';
 
 const logDebugger: Debugger = debug(('develop'))
+
+I18n.configure({
+  locales: ['ja', 'en'],
+  defaultLocale: 'ja',
+  directory: path.join(__dirname, 'config', 'locales'),
+  objectNotation: true
+});
 
 // .envはあればよみこまれ、なければ自動的に無視される
 const ENV_PATH = path.join(__dirname, '../.env');
@@ -57,6 +62,8 @@ app.use(session({
   }
 }));
 
+app.use(I18n.init);
+
 // sessionを利用する仕組みなのでsession周りの設定の後に記述すること
 app.use(csrf({ cookie: true }))
 
@@ -64,8 +71,12 @@ app.use(passport.initialize());
 // sessionでアクセス認証を行う https://applingo.tokyo/article/1700
 app.use(passport.session());
 
-app.use(function currentUser(req, res, next) {
-  res.locals.currentUser = req.user;
+app.use((req, res, next) => {
+  // req.userは User | undefinedで安定しないので
+  // Controller#currentUserでログインユーザーをUser型でセットする
+  // これで良いかは議論してみたい
+  res.locals.currentUser = req.user
+  res.locals.validationError = null
   next();
 });
 
@@ -111,11 +122,7 @@ const logging = (req: Request, res: Response, next: NextFunction) => {
 }
 
 app.use(logging)
-
-app.use('/users', usersRouter);
-app.use('/', registratesRouter);
-app.use('/', authRouter);
-app.use('/', routRouter);
+app.use('/', indexRouter)
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) =>
@@ -132,7 +139,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err.stack)
   // render the error page
   res.status(err.status || 500);
-  res.render('errors');
+  res.render('errors', { layout: false });
 })
 
 export default app;

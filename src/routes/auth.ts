@@ -3,6 +3,7 @@ import passport from "passport"
 import passportLocal from "passport-local"
 import db from "../models";
 import User from "../models/user";
+import asyncHandler from "../lib/asyncWrapper";
 
 const router = express.Router();
 const LocalStrategy = passportLocal.Strategy
@@ -50,23 +51,23 @@ passport.deserializeUser(async (userTid: User, done) => {
   done(null, user);
 });
 
-router.get('/login', [loginCheck, (req: Request, res: Response) => {
+router.get('/login', [loginCheck, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   res.render('auth/login.ejs', { layout: 'layouts/simpleLayout.ejs', loginMessage: req.flash("error") });
-}])
+})])
 
 router.post('/login', loginCheck)
 router.post('/login', [loginCheck, passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/dashboard',
     successFlash: 'ログインしました',
     failureRedirect: '/login',
     failureFlash: 'ログインに失敗しました' // LocalStrategyの第2引数でメッセージを細かくコントロールできるようにすること
   })]
 )
 
-router.get('/logout', (req: Request, res: Response) => {
+router.get('/logout', asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   req.logout();
   req.flash('success', 'ログアウトしました')
   res.redirect('/');
-});
+}));
 
 export default router

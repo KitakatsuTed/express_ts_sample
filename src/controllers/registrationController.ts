@@ -1,15 +1,16 @@
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import User from "../models/user";
 import db from "../models";
 import {ValidationError} from "sequelize";
+import Controller from "./Controller";
 
-export default class RegistratesController {
-  async newForm (req: Request, res: Response) {
+export default class RegistrationController extends Controller {
+  async newForm (req: Request, res: Response, next: NextFunction) {
     const user: User = db.User.build()
-    res.render('registrates/new', { user, validationError: null, csrfToken: req.csrfToken(), layout: 'layouts/simpleLayout.ejs' });
+    res.render('registration/new', { user, csrfToken: req.csrfToken(), layout: 'layouts/simpleLayout.ejs' });
   }
 
-  async create (req: Request, res: Response) {
+  async create (req: Request, res: Response, next: NextFunction) {
     const user = db.User.build({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -23,22 +24,23 @@ export default class RegistratesController {
       res.redirect('/login');
     } catch(e) {
       if (e instanceof ValidationError) {
-        res.render('registrates/new.ejs', { user: user, validationError: e, csrfToken: req.csrfToken() });
+        res.locals.validationError = e
+        res.render('registration/new.ejs', { user: user, csrfToken: req.csrfToken() });
       } else {
         throw e
       }
     }
   }
 
-  async edit (req: Request, res: Response) {
+  async edit (req: Request, res: Response, next: NextFunction) {
     // ログインチェックされている前提なのでタイプキャストしたけどこれでいいかどうか
     // ログインチェック通過したら実行時エラーが起きる可能性があるので怖い
-    const user: User = req.user as User
-    res.render('registrates/edit', { user: user, validationError: null, csrfToken: req.csrfToken() })
+    const user: User = this.currentUser(res)
+    res.render('registration/edit', { user: user, csrfToken: req.csrfToken() })
   }
 
-  async update(req: Request, res: Response) {
-    const user: User = req.user as User
+  async update(req: Request, res: Response, next: NextFunction) {
+    const user: User = this.currentUser(res)
 
     try {
       await user.update({
@@ -51,18 +53,19 @@ export default class RegistratesController {
       res.redirect(`/users/${user.id}`);
     } catch(e) {
       if (e instanceof ValidationError) {
-        res.render('registrates/edit.ejs', { user: user, validationError: e, csrfToken: req.csrfToken() });
+        res.locals.validationError = e
+        res.render('registration/edit.ejs', { user: user, csrfToken: req.csrfToken() });
       } else {
         throw e
       }
     }
   }
 
-  async destroy (req: Request, res: Response) {
-    const user: User = await db.User.findByPk(req.params.id)
+  async destroy (req: Request, res: Response, next: NextFunction) {
+    const user: User = await db.User.findByPk(req.params.id, { rejectOnEmpty: true })
 
     user.destroy()
-    req.flash('success', `新規ユーザー[${user.fullName()}]を削除しました`);
+    req.flash('success', `ユーザー[${user.fullName()}]を削除しました`);
     res.redirect("/users");
   }
 }

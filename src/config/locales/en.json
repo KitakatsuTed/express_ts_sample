@@ -1,0 +1,21 @@
+{
+	"models": {
+		"OrganizationUser": {
+			"role": {
+				"normal": "normal",
+				"manager": "manager"
+			},
+			"status": {
+				"wait": "wait",
+				"accept": "accept"
+			}
+		},
+		"Todo": {
+			"status": {
+				"undone": "undone",
+				"done": "done",
+				"canceled": "canceled"
+			}
+		}
+	}
+}

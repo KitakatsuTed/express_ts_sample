@@ -1,6 +1,6 @@
 <h2>ユーザー一覧</h2>
 
-<table border="1">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>姓名</th>
@@ -12,11 +12,11 @@
   <tbody>
     <% users.forEach(function (user, _key) { %>
       <tr>
-        <td><a href="/users/<%= user.id %>"><%= user.fullName()%></a></td>
+        <td><a href="/users/<%= user.id %>"><%= user.fullName() %></a></td>
         <td><%= user.email %></td>
         <td><%= user.createdAt.toLocaleString("ja") %></td>
         <td><%= user.updatedAt.toLocaleString("ja") %></td>
-    </tr>
+      </tr>
     <% }) %>
   </tbody>
 </table>
