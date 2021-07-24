@@ -8,8 +8,13 @@
 
 <div class="container">
   <%- include('./header.ejs') %>
-  <%- include('../shared/flash.ejs', { message: flashMessage } ) %>
-  <%- body %>
+  <div class="row py-0">
+    <%- include('./sidebar.ejs') %>
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <%- include('../shared/flash.ejs', { message: flashMessage } ) %>
+      <%- body %>
+    </main>
+  </div>
   <%- include('./footer.ejs') %>
 </div>
 

@@ -1,0 +1,18 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <% if (currentUser) { %>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2 mb-2">
+                <a href="/users">ユーザー一覧</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/account/edit">アカウント設定</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/organizations/new">組織作成</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/dashboard">ダッシュボード</a>
+            </li>
+        </ul>
+    <% } %>
+</nav>
