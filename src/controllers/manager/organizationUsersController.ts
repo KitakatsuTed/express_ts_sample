@@ -4,7 +4,7 @@ import Organization from "../../models/organization";
 import db from "../../models";
 import User from "../../models/user";
 import OrganizationUser from "../../models/organizationUser";
-import {ValidationError} from "sequelize";
+import {ValidationError, ValidationErrorItem} from "sequelize";
 import Todo from "../../models/todo";
 import {Enum} from "../../models/enums";
 import OrganizationMailer from "../../mailers/organizationMailer";
@@ -19,7 +19,7 @@ class OrganizationUsersController extends Controller {
       }
     )
 
-    res.render('manager/organizationUsers/show', { organizationUser })
+    res.render('manager/organizationUsers/show', { organizationUser, csrfToken: req.csrfToken() })
   }
 
   async newForm (req: Request, res: Response, next: NextFunction) {
@@ -52,7 +52,7 @@ class OrganizationUsersController extends Controller {
       }
     )
 
-    res.render('organizations/edit', { organizationUser, roleOption: Enum.OrganizationUser.MEMBER_ROLE, csrfToken: req.csrfToken() })
+    res.render('manager/organizationUsers/edit', { organizationUser, roleOption: Enum.OrganizationUser.MEMBER_ROLE, csrfToken: req.csrfToken() })
   }
 
   async update (req: Request, res: Response, next: NextFunction) {
@@ -66,6 +66,12 @@ class OrganizationUsersController extends Controller {
     const organization: Organization = await organizationUser.getOrganization()
 
     try {
+      const managerCount: number = await organization.countOrganizationUsers({ where: { role: Enum.OrganizationUser.MEMBER_ROLE.MANAGER } })
+      if (managerCount == 1 && req.body.role == 'normal' && organizationUser.isRoleManager()) {
+        req.flash('danger', 'マネージャーは一人以上必要です');
+        return res.redirect(`/organizations/${organization.id}/organization_users/${organizationUser.id}/edit`)
+      }
+
       await organizationUser.update({ role: req.body.role })
       req.flash('success', 'メンバー情報を更新しました');
       res.redirect(`/organizations/${organization.id}/organization_users/${organizationUser.id}`);
@@ -87,8 +93,14 @@ class OrganizationUsersController extends Controller {
         rejectOnEmpty: true
       }
     )
-    const user: User = await organizationUser.getUser()
     const organization: Organization = await organizationUser.getOrganization()
+
+    if (organizationUser.isRoleManager()) {
+      req.flash('danger', 'マネージャーは削除不可です');
+      return res.redirect(`/organizations/${organization.id}/organization_users/${organizationUser.id}`)
+    }
+
+    const user: User = await organizationUser.getUser()
     await organizationUser.destroy()
 
     req.flash('success', `メンバー[${user.fullName()}]を削除しました`);

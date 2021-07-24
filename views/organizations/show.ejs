@@ -45,7 +45,8 @@
                             </form>
                         </div>
                         <div class="d-inline-block">
-                            <form method="delete" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>">
+                            <form method="post" action="/organizations/<%= organization.id %>/todos/<%= todo.id %>">
+                                <input id="token" type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="_method" value="delete">
                                 <input type="submit" class="btn btn-danger" value="削除" />
                             </form>
@@ -63,15 +64,35 @@
 <% if (organizationUser.isRoleManager()) { %>
     <div>
         <h2>メンバー</h2>
-        <ul>
-            <% organizationUsers.forEach(function (organizationUser, _key) { %>
-                <li>
-                    <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>">
-                        <%= organizationUser.user.fullName() %>
-                    </a>
-                </li>
-            <% }) %>
-        </ul>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>名前</th>
+                <th>ロール</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% organizationUsers.forEach(function (organizationUser, _key) { %>
+                    <tr>
+                        <td>
+                            <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>">
+                                <%= organizationUser.user.fullName() %>
+                            </a>
+                        </td>
+                        <td>
+                            <%= __(`models.OrganizationUser.role.${organizationUser.role}`) %>
+                        </td>
+                        <td>
+                            <a href="/organizations/<%= organization.id %>/organization_users/<%= organizationUser.id %>/edit">
+                                編集
+                            </a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
         <div>
             <a href="/organizations/<%= organization.id %>/organization_users/new">
                 メンバー追加
