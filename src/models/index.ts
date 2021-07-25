@@ -4,7 +4,7 @@ import User from "./user";
 import Organization from "./organization";
 import OrganizationUser from "./organizationUser";
 import Todo from "./todo";
-const env = process.env.NODE_ENV || 'production';
+const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database')[env];
 // let sequelize: Sequelize;
 // if (config.use_env_variable) {
