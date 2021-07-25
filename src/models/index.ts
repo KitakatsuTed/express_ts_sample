@@ -8,7 +8,6 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database')[env];
 
 config.logging = (logStr: string, execTime: number, options: any) => {
-  console.log(options)
   const col = (optionType: string, log: string) => {
     switch (optionType) {
       case 'SELECT':
