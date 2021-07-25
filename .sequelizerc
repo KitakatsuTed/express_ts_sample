@@ -12,9 +12,9 @@ if(process.env.NODE_ENV != 'production'){
   }
 }else {
   module.exports = {
-    "config": path.resolve("./dist/database", "config.js"),
+    "config": path.resolve("./dist/config", "database.js"),
     "models-path": path.resolve("./dist/models"),
-    "migrations-path": path.resolve("./dist/database/migrations"),
-    "seeders-path": path.resolve("./dist/database/seeders")
+    "migrations-path": path.resolve("./dist/migrations"),
+    "seeders-path": path.resolve("./dist/seeders")
   }
 }
