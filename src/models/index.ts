@@ -32,7 +32,7 @@ config.logging = (logStr: string, execTime: number, options: any) => {
 }
 
 // とりあえずでかいてる
-  sequelize = new Sequelize(process.env.DATABASE_URL as string, config as Options)
+  const sequelize = new Sequelize(process.env.DATABASE_URL as string, config as Options)
 
 // 同じディレクトリないのjsファイルからexportされているモデルクラスをオブジェクトオブジェクトのdbにモデル名(Model.name?)をキーに格納
 // fs
