@@ -1,5 +1,6 @@
 import nodemailer, {Transporter} from 'nodemailer'
 import Mail from "nodemailer/lib/mailer";
+import mailClientConfig from "../config/nodemail";
 
 const defaultData = {
   from: process.env.MAIL_FROM,
@@ -10,13 +11,9 @@ export default class BaseMailer {
 
   // https://penpen-dev.com/blog/xserver-nodemailer/
   constructor() {
-    this.client = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: 1025, // process.env.MAIL_PORT
-      tls: {
-        rejectUnauthorized: process.env.NODE_ENV == 'production',
-      },
-    })
+    console.log(process.env.NODE_ENV)
+    // @ts-ignore
+    this.client = nodemailer.createTransport(mailClientConfig[process.env.NODE_ENV])
   }
 // https://blog.capilano-fw.com/?p=5673
   static async sendMail(mailData: Mail.Options) {
