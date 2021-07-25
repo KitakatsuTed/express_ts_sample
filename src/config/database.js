@@ -32,7 +32,7 @@ module.exports = {
     "dialect": process.env.DB_DIALECT || "postgres",
     // "benchmark": true,
     "logQueryParameters" : true,
-    "dialectOptions": { ssl: true }
+    "dialectOptions": { ssl: true, rejectUnauthorized: false }
   }
 };
 
