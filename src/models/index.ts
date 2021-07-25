@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import {Options, Sequelize} from "sequelize";
 import colors from 'colors/safe'
 import User from "./user";
 import Organization from "./organization";
@@ -31,9 +31,11 @@ config.logging = (logStr: string, execTime: number, options: any) => {
   console.log(colors.magenta(colors.bold(`[${execTime} ms]`)), col(options.type, logStr))
 }
 
-
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
-
+// とりあえずでかいてる
+let sequelize: Sequelize = new Sequelize(config.database, config.username, config.password, config);
+if(process.env.NODE_ENV == 'production') {
+  sequelize = new Sequelize(process.env.DATABASE_URL as string, config as Options)
+}
 
 // 同じディレクトリないのjsファイルからexportされているモデルクラスをオブジェクトオブジェクトのdbにモデル名(Model.name?)をキーに格納
 // fs
