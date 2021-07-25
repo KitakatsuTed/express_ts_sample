@@ -33,7 +33,11 @@ module.exports = {
     // "benchmark": true,
     "logQueryParameters" : true,
     "ssl": true,
-    "dialectOptions": { ssl: true, rejectUnauthorized: false }
+    "dialectOptions": { ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
   }
 };
 
