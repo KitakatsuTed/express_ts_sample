@@ -23,14 +23,13 @@ module.exports = {
     "logQueryParameters" : true
   },
   "production": {
-    'database': process.env.DB_DATABASE || "express_production",
-    "dialect": process.env.DB_DIALECT || "postgres",
+    "use_env_variable": process.env.DATABASE_URL,
     // "benchmark": true,
     "logQueryParameters" : true,
     "ssl": true,
-    "dialectOptions": { ssl: {
-        require: true,
-        rejectUnauthorized: false
+    "dialectOptions": { "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
       }
     }
   }
