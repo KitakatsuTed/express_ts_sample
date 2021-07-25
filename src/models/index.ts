@@ -35,6 +35,8 @@ config.logging = (logStr: string, execTime: number, options: any) => {
 
 let sequelize;
 if (config.use_env_variable) {
+  console.log(config)
+  console.log(config.use_env_variable)
   sequelize = new Sequelize(process.env[config.use_env_variable] as string, config);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
