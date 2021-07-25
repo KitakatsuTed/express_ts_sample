@@ -6,14 +6,9 @@ import OrganizationUser from "./organizationUser";
 import Todo from "./todo";
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database')[env];
-// let sequelize: Sequelize;
-// if (config.use_env_variable) {
-//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
-// } else {
-//   sequelize = new Sequelize(config.database, config.username, config.password, config);
-// }
 
 config.logging = (logStr: string, execTime: number, options: any) => {
+  console.log(options)
   const col = (optionType: string, log: string) => {
     switch (optionType) {
       case 'SELECT':
@@ -28,7 +23,12 @@ config.logging = (logStr: string, execTime: number, options: any) => {
         return colors.white(colors.bold(log))
     }
   }
-  console.log(colors.magenta(colors.bold(`[${execTime} ms]`)), col(options.type, logStr))
+
+  if (options) {
+    console.log(colors.magenta(colors.bold(`[${execTime} ms]`)), col(options.type, logStr))
+  } else {
+    console.log(colors.magenta(colors.bold(`[${execTime} ms]`)), col('', logStr))
+  }
 }
 
 // とりあえずでかいてる
