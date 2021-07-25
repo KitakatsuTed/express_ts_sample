@@ -33,9 +33,10 @@ config.logging = (logStr: string, execTime: number, options: any) => {
 
 // とりあえずでかいてる
 let sequelize: Sequelize = new Sequelize(config.database, config.username, config.password, config);
-if(process.env.NODE_ENV == 'production') {
+if(env == 'production') {
   sequelize = new Sequelize(process.env.DATABASE_URL as string, config as Options)
 }
+console.log(env)
 
 // 同じディレクトリないのjsファイルからexportされているモデルクラスをオブジェクトオブジェクトのdbにモデル名(Model.name?)をキーに格納
 // fs
