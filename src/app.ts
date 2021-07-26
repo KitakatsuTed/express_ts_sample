@@ -25,7 +25,7 @@ const logDebugger: Debugger = debug(('develop'))
 I18n.configure({
   locales: ['ja', 'en'],
   defaultLocale: 'ja',
-  directory: path.join(__dirname, 'config', 'locales'),
+  directory: path.join(__dirname, '../config/locales'),
   objectNotation: true
 });
 
@@ -50,7 +50,7 @@ app.use(expressLayouts);
 app.use(logger('dev') as RequestHandler);
 app.use(express.json() as RequestHandler);
 app.use(express.urlencoded({ extended: false }) as RequestHandler);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use('/bootstrap', express.static(path.join(__dirname, "../node_modules/bootstrap/dist/css"))); // <- This will use the contents of 'bootstrap/dist/css' which is placed in your node_modules folder as if it is in your '/styles/css' directory.
 app.use(cookieParser());
 app.use(session({
