@@ -3,7 +3,7 @@
 const repl = require('repl');
 const fs = require('fs');
 const app = require('../dist/app')
-const models = require('../dist/models');
+const db = require('../dist/models/index');
 const debug = require('debug')('express-mvc:console');
 
 const replServer = repl.start({ useColors: true });
@@ -14,8 +14,8 @@ initContext(replServer.context);
 
 function initContext(context) {
   debug('loading app features...');
-  context.models = models;
-  debug(`"models" loaded on global`);
+  context.db = db;
+  debug(`"db" loaded on global`);
   context.app = app;
   debug('app features loaded!');
 
