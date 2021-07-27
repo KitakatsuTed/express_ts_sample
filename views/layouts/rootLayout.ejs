@@ -9,7 +9,9 @@
 <div class="container">
     <%- include('./header.ejs') %>
     <%- include('../shared/flash.ejs', { message: flashMessage } ) %>
-    <%- body %>
+    <div class="mb-5">
+        <%- body %>
+    </div>
     <%- include('./footer.ejs') %>
 </div>
 

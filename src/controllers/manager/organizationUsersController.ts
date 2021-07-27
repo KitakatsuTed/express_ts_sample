@@ -32,6 +32,7 @@ class OrganizationUsersController extends Controller {
     const organization: Organization = await db.Organization.findByPk(req.params.organizationId)
     if (!(user instanceof User)) {
       req.flash('danger', 'ユーザーが見つかりませんでした');
+      return res.redirect(`/organizations/${organization.id}/new`);
     } else if(await db.OrganizationUser.findOne({ where: { userId: user.id, organizationId: organization.id } })) {
       req.flash('danger', 'すでに招待済みです');
     } else if (user) {

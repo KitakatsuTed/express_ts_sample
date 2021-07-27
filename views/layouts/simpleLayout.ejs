@@ -8,7 +8,9 @@
 
 <div class="container">
     <%- include('../shared/flash.ejs', { message: flashMessage } ) %>
-    <%- body %>
+    <div class="mb-5">
+        <%- body %>
+    </div>
     <%- include('./footer.ejs') %>
 </div>
 
