@@ -91,7 +91,7 @@ class OrganizationsController extends Controller {
 
     await todo.destroy()
 
-    req.flash('success', `組織[${organization.name}]を削除しました`);
+    req.flash('success', 'TODOを削除しました');
     res.redirect(`/organizations/${organization.id}`);
   }
 }
