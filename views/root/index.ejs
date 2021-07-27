@@ -1,7 +1,10 @@
 <h1>ホーム</h1>
 
-<% if (currentUser) { %>
-  <a href="/logout" class="btn btn-secondary">ログアウト</a>
-<% } else { %>
+<% if(!currentUser) { %>
   <a href="/login" class="btn btn-primary">ログイン</a>
+  <a href="/sign_up" class="btn btn-primary">サインアップ</a>
+<% } %>
+
+<% if(currentUser) { %>
+  <a href="/dashboard">ダッシュボードへ</a>
 <% } %>
