@@ -23,8 +23,9 @@ config.logging = (logStr: string, execTime: number, options: any) => {
     }
   }
   console.log("execTime")
-  console.log("execTime")
   console.log(execTime)
+  console.log("options")
+  console.log(options)
 
   if (options) {
     console.log(colors.magenta(colors.bold(`[${execTime} ms]`)), col(options.type, logStr))
